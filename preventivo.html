@@ -8,11 +8,15 @@
     <link rel="icon" type="image/jpeg" href="./immagini/logo.jpg" />
 
     <title>NG Web Designer - Richiesta Sito Web</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <!-- Script Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    
     <style>
       body {
         font-family: "Plus Jakarta Sans", sans-serif;
@@ -67,7 +71,6 @@
                 >NG <span class="text-slate-400 font-normal">Web Designer</span>
               </span></span
             >
-            <!--<span class="block text-[10px] font-mono text-indigo-400/80 uppercase tracking-widest">&lt;dev_mode&gt;</span>-->
           </div>
         </a>
 
@@ -113,7 +116,6 @@
               class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
               >Nome e Cognome *</label
             >
-            <!-- Aggiungi l'attributo name="nome" -->
             <input
               type="text"
               name="nome"
@@ -128,7 +130,6 @@
               class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
               >Email di contatto *</label
             >
-            <!-- Aggiungi l'attributo name="email" -->
             <input
               type="email"
               name="email"
@@ -143,7 +144,6 @@
               class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
               >Tipologia di Progetto</label
             >
-            <!-- Aggiungi l'attributo name="progetto" -->
             <select
               name="progetto"
               class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-300 cursor-pointer"
@@ -160,13 +160,17 @@
               class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
               >Dettagli del Progetto</label
             >
-            <!-- Aggiungi l'attributo name="messaggio" -->
             <textarea
               name="messaggio"
               rows="4"
               placeholder="Descrivi brevemente cosa vorresti realizzare..."
               class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-300"
             ></textarea>
+          </div>
+
+          <!-- WIDGET CLOUDFLARE TURNSTILE (Centrato e con tema scuro) -->
+          <div class="flex justify-center pt-2">
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAFW1gLd8QwOPyCsN" data-theme="dark"></div>
           </div>
 
           <button
