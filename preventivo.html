@@ -40,11 +40,22 @@
           );
         background-size: 40px 40px;
       }
+
+      @keyframes pulse-slow {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(1.05); }
+      }
+      .animate-pulse-slow {
+        animation: pulse-slow 6s ease-in-out infinite;
+      }
     </style>
   </head>
   <body
-    class="tech-bg text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black"
+    class="tech-bg text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black relative overflow-x-hidden"
   >
+    <!-- SFONDO LUMINOSO DECORATIVO (Effetto Neon Tech) -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-indigo-600/20 to-cyan-400/20 blur-[120px] rounded-full pointer-events-none animate-pulse-slow -z-10"></div>
+
     <!-- HEADER & NAVBAR -->
     <header
       class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-indigo-500/20 px-6 py-4 shadow-lg shadow-indigo-950/30"
@@ -52,7 +63,6 @@
       <div class="max-w-6xl mx-auto flex justify-between items-center">
         <!-- BRAND / LOGO JPG -->
         <a href="index.html" class="flex items-center gap-3 group">
-          <!-- Contenitore dell'immagine con bordo e ombra tech -->
           <div
             class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 via-cyan-500 to-emerald-400 p-0.5 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300 overflow-hidden"
           >
@@ -69,8 +79,8 @@
             >
               <span class="text-lg font-black tracking-tight text-white"
                 >NG <span class="text-slate-400 font-normal">Web Designer</span>
-              </span></span
-            >
+              </span>
+            </span>
           </div>
         </a>
 
@@ -95,16 +105,57 @@
 
     <!-- FORM PREVENTIVO INTERATTIVO -->
     <main class="max-w-2xl mx-auto px-6 py-12 flex-grow w-full">
+      
+      <!-- CARD PRINCIPALE UNICA -->
       <div
-        class="bg-slate-900/70 border border-indigo-500/30 rounded-3xl p-8 backdrop-blur-xl shadow-2xl"
+        class="bg-slate-900/70 border border-indigo-500/30 rounded-3xl p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden"
       >
-        <h1 class="text-2xl font-bold text-white mb-2">
-          Richiedi un Preventivo
-        </h1>
-        <p class="text-slate-400 text-sm mb-6">
-          Compila i dati per ricevere una proposta personalizzata per il tuo
-          progetto web.
-        </p>
+        <!-- Decorazione interna sfumata -->
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- HERO HEADER INTERNA -->
+        <div class="text-center sm:text-left mb-8">
+          <!-- BADGE PILLOLA STATUS -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 font-mono text-xs mb-4">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Disponibile per nuovi progetti</span>
+          </div>
+
+          <!-- TITOLO CON GRADIENTE -->
+          <h1 class="text-3xl font-extrabold text-white tracking-tight mb-2">
+            Realizziamo il tuo <span class="bg-gradient-to-r from-cyan-400 via-indigo-400 to-emerald-400 bg-clip-text text-transparent">Sito Web</span>
+          </h1>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Compila il modulo sottostante per richiedere una proposta personalizzata e senza impegno per il tuo brand o la tua attività.
+          </p>
+        </div>
+
+        <!-- BADGE VANTAGGI RAPIDI (Sottili e integrati) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+          <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3.5 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-sm shrink-0">🚀</div>
+            <div>
+              <span class="text-xs font-mono text-slate-200 font-semibold block">Veloce</span>
+              <span class="text-[10px] text-slate-400">Codice ottimizzato</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3.5 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-sm shrink-0">📱</div>
+            <div>
+              <span class="text-xs font-mono text-slate-200 font-semibold block">Responsive</span>
+              <span class="text-[10px] text-slate-400">Mobile & Desktop</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3.5 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-sm shrink-0">🛡️</div>
+            <div>
+              <span class="text-xs font-mono text-slate-200 font-semibold block">Protetto</span>
+              <span class="text-[10px] text-slate-400">Anti-Spam attivo</span>
+            </div>
+          </div>
+        </div>
 
         <form
           action="https://formspree.io/f/xkjovvwq"
@@ -175,9 +226,10 @@
 
           <button
             type="submit"
-            class="w-full py-3.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/30 hover:shadow-cyan-500/50 transform hover:-translate-y-0.5 active:translate-y-0"
+            class="w-full py-3.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/30 hover:shadow-cyan-500/50 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
           >
-            Invia Richiesta ✉️
+            <span>Invia Richiesta</span>
+            <span>✉️</span>
           </button>
         </form>
       </div>
