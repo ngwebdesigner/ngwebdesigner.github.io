@@ -1,8 +1,11 @@
 <!doctype html>
-<html lang="it">
+<html class="w-full overflow-x-hidden" lang="it">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
     <meta
       name="google-site-verification"
@@ -37,13 +40,15 @@
     ></script>
 
     <style>
-      
+      /* FIX SPECIFICO PER SAFARI / IOS OVERFLOW */
       html,
       body {
+        width: 100%;
         max-width: 100%;
         overflow-x: hidden !important;
+        position: relative;
       }
-      
+
       body {
         font-family: "Plus Jakarta Sans", sans-serif;
       }
@@ -81,26 +86,29 @@
       .animate-pulse-slow {
         animation: pulse-slow 6s ease-in-out infinite;
       }
-
     </style>
   </head>
   <body
     class="tech-bg text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black relative overflow-x-hidden w-full"
   >
-    <!-- SFONDO LUMINOSO DECORATIVO (Ottimizzato per non sbordare su mobile) -->
+    <!-- CONTENITORE CLIP PER SAFARI IOS (Racchiude il bagliore) -->
     <div
-      class="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] md:w-[600px] h-[300px] bg-gradient-to-tr from-indigo-600/20 to-cyan-400/20 blur-[120px] rounded-full pointer-events-none animate-pulse-slow -z-10"
-    ></div>
+      class="absolute inset-x-0 top-0 h-[500px] overflow-hidden pointer-events-none -z-10 w-full"
+    >
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-[280px] sm:w-[500px] md:w-[600px] h-[300px] bg-gradient-to-tr from-indigo-600/20 to-cyan-400/20 blur-[100px] rounded-full animate-pulse-slow"
+      ></div>
+    </div>
 
     <!-- HEADER & NAVBAR -->
     <header
-      class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-indigo-500/20 px-6 py-4 shadow-lg shadow-indigo-950/30 w-full"
+      class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-indigo-500/20 px-4 sm:px-6 py-4 shadow-lg shadow-indigo-950/30 w-full"
     >
       <div class="max-w-6xl mx-auto flex justify-between items-center">
         <!-- BRAND / LOGO JPG -->
         <a href="index.html" class="flex items-center gap-3 group">
           <div
-            class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 via-cyan-500 to-emerald-400 p-0.5 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300 overflow-hidden"
+            class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 via-cyan-500 to-emerald-400 p-0.5 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300 overflow-hidden shrink-0"
           >
             <img
               src="./immagini/logo.jpg"
@@ -129,7 +137,7 @@
           <select
             id="page-selector"
             onchange="location = this.value"
-            class="bg-slate-900/90 text-slate-200 font-mono text-xs px-4 py-2.5 rounded-xl border border-indigo-500/40 hover:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-300 cursor-pointer shadow-inner"
+            class="bg-slate-900/90 text-slate-200 font-mono text-xs px-3 sm:px-4 py-2.5 rounded-xl border border-indigo-500/40 hover:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-300 cursor-pointer shadow-inner"
           >
             <option value="index.html">Homepage</option>
             <option value="chi-sono.html">Chi Sono</option>
