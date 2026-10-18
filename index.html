@@ -6,7 +6,7 @@
 
     <meta name="google-site-verification" content="8ev97rjsfKJd9wjLWiD3kgCbrFY-GO0ZYQ4z4PnIYDA" />
 
-    <!-- FAVICON (Icona nella scheda del browser) -->
+    <!-- FAVICON -->
     <link rel="icon" type="image/jpeg" href="./immagini/logo.jpg" />
 
     <title>NG Web Designer - Homepage</title>
@@ -28,7 +28,7 @@
       rel="stylesheet"
     />
     <style>
-      /* FIX SPECIFICO PER SAFARI / IOS OVERFLOW */
+      /* FIX MANIACALE SAFARI / IOS OVERFLOW */
       html, body {
         width: 100%;
         max-width: 100%;
@@ -43,33 +43,17 @@
         font-family: "Fira Code", monospace;
       }
 
-      /* Sfondo Tech / Cyber Grid */
       .tech-bg {
         background-color: #030712;
         background-image:
-          linear-gradient(
-            to right,
-            rgba(99, 102, 241, 0.05) 1px,
-            transparent 1px
-          ),
-          linear-gradient(
-            to bottom,
-            rgba(99, 102, 241, 0.05) 1px,
-            transparent 1px
-          );
+          linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
         background-size: 40px 40px;
       }
 
       @keyframes pulse-slow {
-        0%,
-        100% {
-          opacity: 0.25;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.5;
-          transform: scale(1.05);
-        }
+        0%, 100% { opacity: 0.25; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(1.05); }
       }
       .animate-pulse-slow {
         animation: pulse-slow 6s ease-in-out infinite;
@@ -79,7 +63,7 @@
   <body
     class="tech-bg text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black relative overflow-x-hidden w-full"
   >
-    <!-- CONTENITORE CLIP PER SAFARI IOS (Racchiude il bagliore) -->
+    <!-- CONTENITORE CLIP PER SAFARI IOS -->
     <div class="absolute inset-x-0 top-0 h-[600px] overflow-hidden pointer-events-none -z-10 w-full">
       <div
         class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[500px] md:w-[700px] h-[300px] bg-gradient-to-tr from-indigo-600/20 via-cyan-500/15 to-purple-600/20 blur-[100px] rounded-full animate-pulse-slow"
@@ -107,9 +91,7 @@
             <span
               class="font-extrabold text-xl tracking-tight text-white group-hover:text-cyan-400 transition-colors duration-300"
             >
-              <span class="text-lg font-black tracking-tight text-white"
-                >NG <span class="text-slate-400 font-normal">Web Designer</span>
-              </span>
+              NG <span class="text-slate-400 font-normal">Web Designer</span>
             </span>
           </div>
         </a>
@@ -128,6 +110,7 @@
             <option value="index.html" selected>Homepage</option>
             <option value="chi-sono.html">Chi Sono</option>
             <option value="preventivo.html">Richiesta Sito Web</option>
+            <option value="testimonianze.html">Testimonianze</option>
           </select>
         </div>
       </div>
@@ -182,7 +165,7 @@
         </a>
       </div>
 
-      <!-- VETRINA VISIVA / MOCKUP IMMAGINE TECH -->
+      <!-- VETRINA VISIVA / MOCKUP -->
       <div class="w-full max-w-4xl relative mb-20">
         <div
           class="p-1 rounded-3xl bg-gradient-to-r from-indigo-500/30 via-cyan-500/40 to-purple-500/30 shadow-2xl shadow-indigo-950/60 backdrop-blur-xl"
@@ -190,7 +173,6 @@
           <div
             class="rounded-[22px] overflow-hidden bg-slate-950 border border-slate-800/80 relative group"
           >
-            <!-- Barra Superiore stile Browser -->
             <div
               class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex items-center gap-2"
             >
@@ -206,19 +188,16 @@
               </div>
             </div>
 
-            <!-- Immagine di copertina Unsplash (No-Copyright) -->
             <img
               src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop"
               alt="Sviluppo Web e Codice Moderno"
               class="w-full h-auto max-h-[420px] object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 ease-out"
             />
 
-            <!-- Sovrapposizione Gradiente Sfumato -->
             <div
               class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80 pointer-events-none"
             ></div>
 
-            <!-- Tag Fluttuante sull'immagine -->
             <div
               class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
             >
@@ -238,7 +217,7 @@
         </div>
       </div>
 
-      <!-- NUOVA SEZIONE: A CHI È RIVOLTO -->
+      <!-- SEZIONE: A CHI È RIVOLTO -->
       <div class="w-full max-w-5xl mb-20">
         <div class="text-center mb-12">
           <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest block mb-2 font-semibold">
@@ -251,7 +230,6 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <!-- Target 1: Piccole e Medie Imprese -->
           <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-6 hover:border-cyan-500/50 transition-all duration-300 group flex flex-col justify-between">
             <div>
               <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-lg mb-4 group-hover:scale-110 transition-transform">
@@ -267,7 +245,6 @@
             </div>
           </div>
 
-          <!-- Target 2: Liberi Professionisti & Freelance -->
           <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-6 hover:border-indigo-500/50 transition-all duration-300 group flex flex-col justify-between">
             <div>
               <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-lg mb-4 group-hover:scale-110 transition-transform">
@@ -283,7 +260,6 @@
             </div>
           </div>
 
-          <!-- Target 3: Attività Locali & Negozi -->
           <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-6 hover:border-emerald-500/50 transition-all duration-300 group flex flex-col justify-between">
             <div>
               <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-lg mb-4 group-hover:scale-110 transition-transform">
@@ -299,7 +275,6 @@
             </div>
           </div>
 
-          <!-- Target 4: Startup & Nuove Idee -->
           <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 group flex flex-col justify-between">
             <div>
               <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-lg mb-4 group-hover:scale-110 transition-transform">
@@ -317,11 +292,10 @@
         </div>
       </div>
 
-      <!-- SEZIONE VANTAGGI & CARATTERISTICHE (Griglia a 3 colonne) -->
+      <!-- SEZIONE VANTAGGI & CARATTERISTICHE -->
       <div
         class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl text-left mb-12"
       >
-        <!-- Card 1 -->
         <div
           class="bg-slate-900/60 border border-indigo-500/20 rounded-2xl p-6 backdrop-blur-xl hover:border-cyan-500/40 transition-all duration-300 group"
         >
@@ -339,7 +313,6 @@
           </p>
         </div>
 
-        <!-- Card 2 -->
         <div
           class="bg-slate-900/60 border border-indigo-500/20 rounded-2xl p-6 backdrop-blur-xl hover:border-indigo-500/40 transition-all duration-300 group"
         >
@@ -355,7 +328,6 @@
           </p>
         </div>
 
-        <!-- Card 3 -->
         <div
           class="bg-slate-900/60 border border-indigo-500/20 rounded-2xl p-6 backdrop-blur-xl hover:border-emerald-500/40 transition-all duration-300 group"
         >
@@ -375,12 +347,11 @@
       </div>
     </main>
 
-    <!-- FOOTER TECH CON SOCIAL -->
+    <!-- FOOTER -->
     <footer
       class="border-t border-slate-900 bg-slate-950/80 text-center py-6 text-xs text-slate-500 font-mono relative z-10 w-full"
     >
       <div class="max-w-7xl mx-auto px-4 flex flex-col items-center space-y-4">
-        <!-- Link Social Footer -->
         <div class="flex items-center space-x-6">
           <a
             href="https://github.com/ngwebdesigner"
@@ -395,7 +366,6 @@
               />
             </svg>
           </a>
-
           <a
             href="https://tiktok.com/@alexnicu75"
             target="_blank"
@@ -409,7 +379,6 @@
               />
             </svg>
           </a>
-
           <a
             href="https://instagram.com/nicuale99"
             target="_blank"
@@ -424,7 +393,6 @@
             </svg>
           </a>
         </div>
-        <!-- Copyright -->
         <p>© 2026 NG Web Designer • Nicusor George Alexandru</p>
       </div>
     </footer>

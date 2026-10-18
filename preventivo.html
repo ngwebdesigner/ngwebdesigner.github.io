@@ -12,10 +12,10 @@
       content="8ev97rjsfKJd9wjLWiD3kgCbrFY-GO0ZYQ4z4PnIYDA"
     />
 
-    <!-- FAVICON (Icona nella scheda del browser) -->
+    <!-- FAVICON -->
     <link rel="icon" type="image/jpeg" href="./immagini/logo.jpg" />
 
-    <title>NG Web Designer - Richiesta Sito Web</title>
+    <title>NG Web Designer - Richiesta Sito Web & FAQ</title>
 
     <meta
       name="description"
@@ -23,7 +23,7 @@
     />
     <meta
       name="keywords"
-      content="NG Web Designer, Nicusor George Alexandru, sviluppatore web, designer, siti web, progetti web, servizi web, contatto"
+      content="NG Web Designer, Nicusor George Alexandru, sviluppatore web, designer, siti web, progetti web, servizi web, contatto, faq"
     />
     <meta name="author" content="Nicusor George Alexandru" />
 
@@ -40,7 +40,7 @@
     ></script>
 
     <style>
-      /* FIX SPECIFICO PER SAFARI / IOS OVERFLOW */
+      /* FIX MANIACALE SAFARI / IOS OVERFLOW */
       html,
       body {
         width: 100%;
@@ -59,29 +59,14 @@
       .tech-bg {
         background-color: #030712;
         background-image:
-          linear-gradient(
-            to right,
-            rgba(99, 102, 241, 0.05) 1px,
-            transparent 1px
-          ),
-          linear-gradient(
-            to bottom,
-            rgba(99, 102, 241, 0.05) 1px,
-            transparent 1px
-          );
+          linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
         background-size: 40px 40px;
       }
 
       @keyframes pulse-slow {
-        0%,
-        100% {
-          opacity: 0.3;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.6;
-          transform: scale(1.05);
-        }
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(1.05); }
       }
       .animate-pulse-slow {
         animation: pulse-slow 6s ease-in-out infinite;
@@ -91,7 +76,7 @@
   <body
     class="tech-bg text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black relative overflow-x-hidden w-full"
   >
-    <!-- CONTENITORE CLIP PER SAFARI IOS (Racchiude il bagliore) -->
+    <!-- CONTENITORE CLIP PER SAFARI IOS -->
     <div
       class="absolute inset-x-0 top-0 h-[500px] overflow-hidden pointer-events-none -z-10 w-full"
     >
@@ -121,9 +106,7 @@
             <span
               class="font-extrabold text-xl tracking-tight text-white group-hover:text-cyan-400 transition-colors duration-300"
             >
-              <span class="text-lg font-black tracking-tight text-white"
-                >NG <span class="text-slate-400 font-normal">Web Designer</span>
-              </span>
+              NG <span class="text-slate-400 font-normal">Web Designer</span>
             </span>
           </div>
         </a>
@@ -142,27 +125,26 @@
             <option value="index.html">Homepage</option>
             <option value="chi-sono.html">Chi Sono</option>
             <option value="preventivo.html" selected>Richiesta Sito Web</option>
+            <option value="testimonianze.html">Testimonianze</option>
           </select>
         </div>
       </div>
     </header>
 
-    <!-- FORM PREVENTIVO INTERATTIVO -->
+    <!-- FORM PREVENTIVO & FAQ INTERATTIVA -->
     <main
-      class="max-w-2xl mx-auto px-4 sm:px-6 py-12 flex-grow w-full overflow-x-hidden"
+      class="max-w-3xl mx-auto px-4 sm:px-6 py-12 flex-grow w-full overflow-x-hidden space-y-12"
     >
-      <!-- CARD PRINCIPALE UNICA -->
+      <!-- CARD PRINCIPALE DEL FORM -->
       <div
         class="bg-slate-900/70 border border-indigo-500/30 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden w-full"
       >
-        <!-- Decorazione interna sfumata -->
         <div
           class="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"
         ></div>
 
         <!-- HERO HEADER INTERNA -->
         <div class="text-center sm:text-left mb-8">
-          <!-- BADGE PILLOLA STATUS -->
           <div
             class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 font-mono text-xs mb-4"
           >
@@ -172,7 +154,6 @@
             <span>Disponibile per nuovi progetti</span>
           </div>
 
-          <!-- TITOLO CON GRADIENTE -->
           <h1
             class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2"
           >
@@ -188,7 +169,7 @@
           </p>
         </div>
 
-        <!-- BADGE VANTAGGI RAPIDI (Sottili e integrati) -->
+        <!-- BADGE VANTAGGI RAPIDI -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
           <div
             class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3.5 flex items-center gap-3"
@@ -301,7 +282,7 @@
             ></textarea>
           </div>
 
-          <!-- WIDGET CLOUDFLARE TURNSTILE (Centrato e con tema scuro) -->
+          <!-- WIDGET CLOUDFLARE TURNSTILE -->
           <div class="flex justify-center pt-2 overflow-x-hidden">
             <div
               class="cf-turnstile"
@@ -319,14 +300,68 @@
           </button>
         </form>
       </div>
+
+      <!-- NUOVA SEZIONE: FAQ (DOMANDE FREQUENTI) -->
+      <section class="w-full space-y-6 pt-4">
+        <div class="text-center">
+          <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest block mb-2 font-semibold">
+            DUBBI O CURIOSITÀ?
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-white">Domande Frequenti (FAQ)</h2>
+          <p class="text-slate-400 text-xs mt-1">
+            Tutto quello che c'è da sapere prima di iniziare a lavorare insieme.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- FAQ 1 -->
+          <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-5 hover:border-cyan-500/40 transition-all duration-300">
+            <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              <span class="text-cyan-400 font-mono">01.</span> Quanto tempo ci vuole per realizzare il sito?
+            </h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              I tempi variano in base alla complessità: un sito vetrina o un portfolio richiede solitamente dai 5 ai 7 giorni lavorativi dall'approvazione dei contenuti.
+            </p>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-5 hover:border-indigo-500/40 transition-all duration-300">
+            <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              <span class="text-indigo-400 font-mono">02.</span> Cosa devo fornire per iniziare?
+            </h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Ti basta un'idea di base, eventuali testi descrittivi, logo o immagini della tua attività. Se non li hai, ti supporto io nella creazione e nella scelta dei contenuti ideali.
+            </p>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-5 hover:border-emerald-500/40 transition-all duration-300">
+            <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              <span class="text-emerald-400 font-mono">03.</span> Il sito sarà visibile da smartphone?
+            </h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Assolutamente sì. Tutti i siti sono progettati con un approccio mobile-first e testati rigorosamente su dispositivi iOS e Android per garantire una fluidità perfetta.
+            </p>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-5 hover:border-purple-500/40 transition-all duration-300">
+            <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              <span class="text-purple-400 font-mono">04.</span> Come funziona l'assistenza post-lancio?
+            </h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Anche dopo la pubblicazione rimango a disposizione per eventuali aggiornamenti, ottimizzazioni o modifiche strutturali concordate in base alle tue esigenze.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <!-- FOOTER TECH CON SOCIAL -->
+    <!-- FOOTER -->
     <footer
       class="border-t border-slate-900 bg-slate-950/80 text-center py-6 text-xs text-slate-500 font-mono relative z-10 w-full"
     >
       <div class="max-w-7xl mx-auto px-4 flex flex-col items-center space-y-4">
-        <!-- Link Social Footer -->
         <div class="flex items-center space-x-6">
           <a
             href="https://github.com/ngwebdesigner"
@@ -341,12 +376,11 @@
               />
             </svg>
           </a>
-
           <a
             href="https://tiktok.com/@alexnicu75"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-slate-500 hover:text-cyan-600 transition-colors"
+            class="text-slate-500 hover:text-cyan-300 transition-colors"
             aria-label="TikTok"
           >
             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -355,7 +389,6 @@
               />
             </svg>
           </a>
-
           <a
             href="https://instagram.com/nicuale99"
             target="_blank"
@@ -370,7 +403,6 @@
             </svg>
           </a>
         </div>
-        <!-- Copyright -->
         <p>© 2026 NG Web Designer • Nicusor George Alexandru</p>
       </div>
     </footer>
