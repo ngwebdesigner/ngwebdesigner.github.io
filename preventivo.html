@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="w-full overflow-x-hidden" lang="it">
+<html class="w-full scroll-smooth" lang="it">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -40,15 +40,6 @@
     ></script>
 
     <style>
-      /* FIX MANIACALE SAFARI / IOS OVERFLOW */
-      html,
-      body {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden !important;
-        position: relative;
-      }
-
       body {
         font-family: "Plus Jakarta Sans", sans-serif;
       }
@@ -89,769 +80,626 @@
     </style>
   </head>
   <body
-    class="tech-bg text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black relative overflow-x-hidden w-full"
+    class="tech-bg text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black relative w-full"
   >
-    <!-- CONTENITORE CLIP PER SAFARI IOS -->
-    <div
-      class="absolute inset-x-0 top-0 h-[500px] overflow-hidden pointer-events-none -z-10 w-full"
-    >
+    <!-- WRAPPER OVERFLOW PER EVITARE SCROLL ORIZZONTALE SENZA ROMPERE STICKY -->
+    <div class="overflow-x-clip w-full min-h-screen flex flex-col justify-between relative">
+
+      <!-- CONTENITORE CLIP PER SAFARI IOS -->
       <div
-        class="absolute top-0 left-1/2 -translate-x-1/2 w-[280px] sm:w-[500px] md:w-[600px] h-[300px] bg-gradient-to-tr from-indigo-600/20 to-cyan-400/20 blur-[100px] rounded-full animate-pulse-slow"
-      ></div>
-    </div>
-
-    <!--Promo lancio 2026!-->
-    <div
-      class="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white py-2.5 px-4 text-center relative overflow-hidden shadow-md"
-    >
-      <div
-        class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-medium"
-      >
-        <span
-          class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse"
-        >
-          Promo Lancio (Solo per 5 attività)
-        </span>
-        <span>
-          🤝 <strong>Porta 3 amici</strong> per loro
-          <strong>-20% su sito web</strong> per te
-          <strong>1 Anno di Assistenza Gratis!</strong>
-        </span>
-        <button
-          type="button"
-          id="open-promo-modal"
-          class="underline font-bold hover:text-slate-200 transition-colors ml-1 cursor-pointer"
-        >
-          Leggi il Regolamento &rarr;
-        </button>
-      </div>
-    </div>
-
-    <!-- HEADER & NAVBAR -->
-    <header
-      class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-indigo-500/20 px-4 sm:px-6 py-4 shadow-lg shadow-indigo-950/30 w-full"
-    >
-      <div class="max-w-6xl mx-auto flex justify-between items-center">
-        <!-- BRAND / LOGO JPG -->
-        <a href="index.html" class="flex items-center gap-3 group">
-          <div
-            class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 via-cyan-500 to-emerald-400 p-0.5 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300 overflow-hidden shrink-0"
-          >
-            <img
-              src="./immagini/logo.jpg"
-              alt="NG Web Designer Logo"
-              class="w-full h-full object-cover rounded-[10px]"
-            />
-          </div>
-
-          <div>
-            <span
-              class="font-extrabold text-xl tracking-tight text-white group-hover:text-cyan-400 transition-colors duration-300"
-            >
-              NG <span class="text-slate-400 font-normal">Web Designer</span>
-            </span>
-          </div>
-        </a>
-
-        <div class="flex items-center gap-3">
-          <label
-            for="page-selector"
-            class="text-xs font-mono text-cyan-400 hidden sm:block"
-            >Menù:</label
-          >
-          <select
-            id="page-selector"
-            onchange="location = this.value"
-            class="bg-slate-900/90 text-slate-200 font-mono text-xs px-3 sm:px-4 py-2.5 rounded-xl border border-indigo-500/40 hover:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-300 cursor-pointer shadow-inner"
-          >
-            <option value="index.html">Homepage</option>
-            <option value="chi-sono.html">Chi Sono</option>
-            <option value="preventivo.html" selected>Richiesta Sito Web</option>
-            <option value="testimonianze.html">Testimonianze</option>
-          </select>
-        </div>
-      </div>
-    </header>
-
-    <!-- FORM PREVENTIVO & FAQ INTERATTIVA -->
-    <main
-      class="max-w-3xl mx-auto px-4 sm:px-6 py-12 flex-grow w-full overflow-x-hidden space-y-12"
-    >
-      <!-- CARD PRINCIPALE DEL FORM -->
-      <div
-        class="bg-slate-900/70 border border-indigo-500/30 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden w-full"
+        class="absolute inset-x-0 top-0 h-[500px] overflow-hidden pointer-events-none -z-10 w-full"
       >
         <div
-          class="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"
+          class="absolute top-0 left-1/2 -translate-x-1/2 w-[280px] sm:w-[500px] md:w-[600px] h-[300px] bg-gradient-to-tr from-indigo-600/20 to-cyan-400/20 blur-[100px] rounded-full animate-pulse-slow"
         ></div>
-
-        <!-- HERO HEADER INTERNA -->
-        <div class="text-center sm:text-left mb-8">
-          <div
-            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 font-mono text-xs mb-4"
-          >
-            <span
-              class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"
-            ></span>
-            <span>Disponibile per nuovi progetti</span>
-          </div>
-
-          <h1
-            class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2"
-          >
-            Realizziamo il tuo
-            <span
-              class="bg-gradient-to-r from-cyan-400 via-indigo-400 to-emerald-400 bg-clip-text text-transparent"
-              >Sito Web</span
-            >
-          </h1>
-          <p class="text-slate-400 text-sm leading-relaxed">
-            Compila il modulo sottostante per richiedere una proposta
-            personalizzata e senza impegno per il tuo brand o la tua attività.
-          </p>
-        </div>
-
-        <!-- BADGE VANTAGGI RAPIDI -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-          <div
-            class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3.5 flex items-center gap-3"
-          >
-            <div
-              class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-sm shrink-0"
-            >
-              🚀
-            </div>
-            <div>
-              <span class="text-xs font-mono text-slate-200 font-semibold block"
-                >Veloce</span
-              >
-              <span class="text-[10px] text-slate-400">Codice ottimizzato</span>
-            </div>
-          </div>
-
-          <div
-            class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3.5 flex items-center gap-3"
-          >
-            <div
-              class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-sm shrink-0"
-            >
-              📱
-            </div>
-            <div>
-              <span class="text-xs font-mono text-slate-200 font-semibold block"
-                >Responsive</span
-              >
-              <span class="text-[10px] text-slate-400">Mobile & Desktop</span>
-            </div>
-          </div>
-
-          <div
-            class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3.5 flex items-center gap-3"
-          >
-            <div
-              class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-sm shrink-0"
-            >
-              🛡️
-            </div>
-            <div>
-              <span class="text-xs font-mono text-slate-200 font-semibold block"
-                >Protetto</span
-              >
-              <span class="text-[10px] text-slate-400">Anti-Spam attivo</span>
-            </div>
-          </div>
-        </div>
-
-        <form
-          action="https://formspree.io/f/xkjovvwq"
-          method="POST"
-          class="space-y-5"
-        >
-          <div>
-            <label
-              class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
-              >Nome e Cognome *</label
-            >
-            <input
-              type="text"
-              name="nome"
-              required
-              placeholder="Mario Rossi"
-              class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-300"
-            />
-          </div>
-
-          <div>
-            <label
-              class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
-              >Email di contatto *</label
-            >
-            <input
-              type="email"
-              name="email"
-              required
-              placeholder="mario@esempio.it"
-              class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-300"
-            />
-          </div>
-
-          <div>
-            <label
-              class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
-              >Tipologia di Progetto</label
-            >
-            <select
-              name="progetto"
-              class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-300 cursor-pointer"
-            >
-              <option value="vetrina">Sito Vetrina per Attività Locale</option>
-              <option value="personal">Portfolio / Autopresentazione</option>
-              <option value="e-commerce">E-Commerce / Store Online</option>
-              <option value="altro">Altro / Consulenza Tech</option>
-            </select>
-          </div>
-
-          <div>
-            <label
-              class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
-              >Dettagli del Progetto</label
-            >
-            <textarea
-              name="messaggio"
-              rows="4"
-              placeholder="Descrivi brevemente cosa vorresti realizzare..."
-              class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-300"
-            ></textarea>
-          </div>
-
-          <!-- WIDGET CLOUDFLARE TURNSTILE -->
-          <div class="flex justify-center pt-2 overflow-x-hidden">
-            <div
-              class="cf-turnstile"
-              data-sitekey="0x4AAAAAAFZx6oW-o2Q4sTPo"
-              data-theme="dark"
-            ></div>
-          </div>
-
-          <button
-            type="submit"
-            class="w-full py-3.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/30 hover:shadow-cyan-500/50 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
-          >
-            <span>Invia Richiesta</span>
-            <span>✉️</span>
-          </button>
-        </form>
       </div>
 
-      <!-- SEZIONE FAQ PREVENTIVI (STILE ACCORDION ANIMATO ROSSO) -->
-      <section class="py-16 bg-slate-900 text-slate-100" id="faq-preventivi">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <!-- Titolo della sezione -->
-          <div class="text-center mb-12">
-            <span
-              class="text-xs font-mono text-red-500 uppercase tracking-widest block mb-2 font-semibold"
+      <!--Promo lancio 2026!-->
+      <div
+        class="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white py-2.5 px-4 text-center relative overflow-hidden shadow-md"
+      >
+        <div
+          class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-medium"
+        >
+          <span
+            class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse"
+          >
+            Promo Lancio (Solo per 5 attività)
+          </span>
+          <span>
+            🤝 <strong>Porta 3 amici</strong> per loro
+            <strong>-20% su sito web</strong> per te
+            <strong>1 Anno di Assistenza Gratis!</strong>
+          </span>
+          <button
+            type="button"
+            id="open-promo-modal"
+            class="underline font-bold hover:text-slate-200 transition-colors ml-1 cursor-pointer"
+          >
+            Leggi il Regolamento &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- HEADER & NAVBAR FISSA -->
+      <header
+        class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-indigo-500/20 px-4 sm:px-6 py-4 shadow-lg shadow-indigo-950/30 w-full"
+      >
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+          <!-- BRAND / LOGO JPG -->
+          <a href="index.html" class="flex items-center gap-3 group">
+            <div
+              class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 via-cyan-500 to-emerald-400 p-0.5 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300 overflow-hidden shrink-0"
             >
-              DUBBI O CURIOSITÀ?
-            </span>
-            <h2
-              class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight"
+              <img
+                src="./immagini/logo.jpg"
+                alt="NG Web Designer Logo"
+                class="w-full h-full object-cover rounded-[10px]"
+              />
+            </div>
+
+            <div>
+              <span
+                class="font-extrabold text-xl tracking-tight text-white group-hover:text-cyan-400 transition-colors duration-300"
+              >
+                NG <span class="text-slate-400 font-normal">Web Designer</span>
+              </span>
+            </div>
+          </a>
+
+          <div class="flex items-center gap-3">
+            <label
+              for="page-selector"
+              class="text-xs font-mono text-cyan-400 hidden sm:block"
+              >Menù:</label
             >
-              Domande Frequenti <span class="text-red-500">(FAQ)</span>
-            </h2>
-            <p class="mt-3 text-lg text-slate-400">
-              Tutto quello che c'è da sapere prima di iniziare a lavorare
-              insieme e richiedere un preventivo.
+            <select
+              id="page-selector"
+              onchange="location = this.value"
+              class="bg-slate-900/90 text-slate-200 font-mono text-xs px-3 sm:px-4 py-2.5 rounded-xl border border-indigo-500/40 hover:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-300 cursor-pointer shadow-inner"
+            >
+              <option value="index.html">Homepage</option>
+              <option value="chi-sono.html">Chi Sono</option>
+              <option value="preventivo.html" selected>Richiesta Sito Web</option>
+              <option value="testimonianze.html">Testimonianze</option>
+            </select>
+          </div>
+        </div>
+      </header>
+
+      <!-- FORM PREVENTIVO & FAQ INTERATTIVA -->
+      <main
+        class="max-w-3xl mx-auto px-4 sm:px-6 py-12 flex-grow w-full space-y-12"
+      >
+        <!-- CARD PRINCIPALE DEL FORM -->
+        <div
+          class="bg-slate-900/70 border border-indigo-500/30 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden w-full"
+        >
+          <div
+            class="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"
+          ></div>
+
+          <!-- HERO HEADER INTERNA -->
+          <div class="text-center sm:text-left mb-8">
+            <div
+              class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 font-mono text-xs mb-4"
+            >
+              <span
+                class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"
+              ></span>
+              <span>Disponibile per nuovi progetti</span>
+            </div>
+
+            <h1
+              class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2"
+            >
+              Realizziamo il tuo
+              <span
+                class="bg-gradient-to-r from-cyan-400 via-indigo-400 to-emerald-400 bg-clip-text text-transparent"
+                >Sito Web</span
+              >
+            </h1>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Compila il modulo sottostante per richiedere una proposta
+              personalizzata e senza impegno per il tuo brand o la tua attività.
             </p>
           </div>
 
-          <!-- Lista Accordion FAQ -->
-          <div class="space-y-4">
-            <!-- DOMANDA 1 -->
+          <!-- BADGE VANTAGGI RAPIDI -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
             <div
-              class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
+              class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3.5 flex items-center gap-3"
             >
-              <button
-                type="button"
-                class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none"
-              >
-                <span
-                  class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
-                >
-                  <span class="text-red-500 font-mono text-base">01.</span>
-                  Quanto tempo ci vuole per realizzare il sito?
-                </span>
-                <svg
-                  class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
               <div
-                class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-sm shrink-0"
               >
-                <div class="overflow-hidden">
-                  <p
-                    class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
-                  >
-                    I tempi variano in base alla complessità: un sito vetrina o
-                    un portfolio richiede solitamente dai 5 ai 7 giorni
-                    lavorativi dall'approvazione dei contenuti.
-                  </p>
-                </div>
+                🚀
+              </div>
+              <div>
+                <span class="text-xs font-mono text-slate-200 font-semibold block"
+                  >Veloce</span
+                >
+                <span class="text-[10px] text-slate-400">Codice ottimizzato</span>
               </div>
             </div>
 
-            <!-- DOMANDA 2 -->
             <div
-              class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
+              class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3.5 flex items-center gap-3"
             >
-              <button
-                type="button"
-                class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none"
-              >
-                <span
-                  class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
-                >
-                  <span class="text-red-500 font-mono text-base">02.</span> Cosa
-                  devo fornire per iniziare?
-                </span>
-                <svg
-                  class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
               <div
-                class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-sm shrink-0"
               >
-                <div class="overflow-hidden">
-                  <p
-                    class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
-                  >
-                    Ti basta un'idea di base, eventuali testi descrittivi, logo
-                    o immagini della tua attività. Se non li hai, ti supporto io
-                    nella creazione e nella scelta dei contenuti ideali.
-                  </p>
-                </div>
+                📱
+              </div>
+              <div>
+                <span class="text-xs font-mono text-slate-200 font-semibold block"
+                  >Responsive</span
+                >
+                <span class="text-[10px] text-slate-400">Mobile & Desktop</span>
               </div>
             </div>
 
-            <!-- DOMANDA 3 -->
             <div
-              class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
+              class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-3.5 flex items-center gap-3"
             >
-              <button
-                type="button"
-                class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none"
-              >
-                <span
-                  class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
-                >
-                  <span class="text-red-500 font-mono text-base">03.</span> Il
-                  sito sarà visibile da smartphone?
-                </span>
-                <svg
-                  class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
               <div
-                class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-sm shrink-0"
               >
-                <div class="overflow-hidden">
-                  <p
-                    class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
-                  >
-                    Assolutamente sì. Tutti i siti sono progettati con un
-                    approccio mobile-first e testati rigorosamente su
-                    dispositivi iOS e Android per garantire una fluidità
-                    perfetta.
-                  </p>
-                </div>
+                🛡️
+              </div>
+              <div>
+                <span class="text-xs font-mono text-slate-200 font-semibold block"
+                  >Protetto</span
+                >
+                <span class="text-[10px] text-slate-400">Anti-Spam attivo</span>
               </div>
             </div>
+          </div>
 
-            <!-- DOMANDA 4 -->
-            <div
-              class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
-            >
-              <button
-                type="button"
-                class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none"
+          <form
+            action="https://formspree.io/f/xkjovvwq"
+            method="POST"
+            class="space-y-5"
+          >
+            <div>
+              <label
+                class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
+                >Nome e Cognome *</label
               >
-                <span
-                  class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
-                >
-                  <span class="text-red-500 font-mono text-base">04.</span> Come
-                  funziona l'assistenza post-lancio?
-                </span>
-                <svg
-                  class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              <div
-                class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
-              >
-                <div class="overflow-hidden">
-                  <p
-                    class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
-                  >
-                    Anche dopo la pubblicazione rimango a disposizione per
-                    eventuali aggiornamenti, ottimizzazioni o modifiche
-                    strutturali concordate in base alle tue esigenze.
-                  </p>
-                </div>
-              </div>
+              <input
+                type="text"
+                name="nome"
+                required
+                placeholder="Mario Rossi"
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-300"
+              />
             </div>
 
-            <!-- DOMANDA 5 -->
-            <div
-              class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
-            >
-              <button
-                type="button"
-                class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none"
+            <div>
+              <label
+                class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
+                >Email di contatto *</label
               >
-                <span
-                  class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
-                >
-                  <span class="text-red-500 font-mono text-base">05.</span> Ci
-                  sono costi nascosti o canoni mensili?
-                </span>
-                <svg
-                  class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              <div
-                class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
-              >
-                <div class="overflow-hidden">
-                  <p
-                    class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
-                  >
-                    Nessun costo nascosto. Il preventivo fornito è chiaro e
-                    definitivo. Una volta saldato il lavoro, il codice e la
-                    struttura del sito rimangono interamente di tua proprietà.
-                  </p>
-                </div>
-              </div>
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="mario@esempio.it"
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-300"
+              />
             </div>
 
-            <!-- DOMANDA 6 -->
-            <div
-              class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
-            >
-              <button
-                type="button"
-                class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none"
+            <div>
+              <label
+                class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
+                >Tipologia di Progetto</label
               >
-                <span
-                  class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
-                >
-                  <span class="text-red-500 font-mono text-base">06.</span> Come
-                  funziona la gestione di Dominio e Hosting?
-                </span>
-                <svg
-                  class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              <div
-                class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+              <select
+                name="progetto"
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-300 cursor-pointer"
               >
-                <div class="overflow-hidden">
-                  <p
-                    class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
-                  >
-                    Posso guidarti nella registrazione del tuo dominio
-                    personalizzato (.it, .com) o configurare la pubblicazione
-                    gratuita tramite GitHub Pages a seconda del tuo budget e
-                    delle tue necessità.
-                  </p>
-                </div>
-              </div>
+                <option value="vetrina">Sito Vetrina per Attività Locale</option>
+                <option value="personal">Portfolio / Autopresentazione</option>
+                <option value="e-commerce">E-Commerce / Store Online</option>
+                <option value="altro">Altro / Consulenza Tech</option>
+              </select>
             </div>
 
-            <!-- DOMANDA 7 -->
-            <div
-              class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
-            >
-              <button
-                type="button"
-                class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none"
+            <div>
+              <label
+                class="block text-xs font-mono text-slate-300 mb-1.5 uppercase"
+                >Dettagli del Progetto</label
               >
-                <span
-                  class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
-                >
-                  <span class="text-red-500 font-mono text-base">07.</span>
-                  Posso richiedere modifiche durante la lavorazione?
-                </span>
-                <svg
-                  class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              <div
-                class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
-              >
-                <div class="overflow-hidden">
-                  <p
-                    class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
-                  >
-                    Certamente. Invio sempre un'anteprima di prova durante lo
-                    sviluppo in modo da correggere dettagli, colori o testi
-                    insieme prima della messa online definitiva.
-                  </p>
-                </div>
-              </div>
+              <textarea
+                name="messaggio"
+                rows="4"
+                placeholder="Descrivi brevemente cosa vorresti realizzare..."
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all duration-300"
+              ></textarea>
             </div>
 
-            <!-- DOMANDA 8 -->
-            <div
-              class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
-            >
-              <button
-                type="button"
-                class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none"
-              >
-                <span
-                  class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
-                >
-                  <span class="text-red-500 font-mono text-base">08.</span>
-                  Quali sono le modalità di pagamento accettate?
-                </span>
-                <svg
-                  class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
+            <!-- WIDGET CLOUDFLARE TURNSTILE -->
+            <div class="flex justify-center pt-2 overflow-x-hidden">
               <div
-                class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                class="cf-turnstile"
+                data-sitekey="0x4AAAAAAFZx6oW-o2Q4sTPo"
+                data-theme="dark"
+              ></div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full py-3.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/30 hover:shadow-cyan-500/50 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>Invia Richiesta</span>
+              <span>✉️</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- SEZIONE FAQ PREVENTIVI -->
+        <section class="py-16 bg-slate-900 text-slate-100 rounded-3xl" id="faq-preventivi">
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+              <span
+                class="text-xs font-mono text-red-500 uppercase tracking-widest block mb-2 font-semibold"
               >
-                <div class="overflow-hidden">
-                  <p
-                    class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
+                DUBBI O CURIOSITÀ?
+              </span>
+              <h2
+                class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight"
+              >
+                Domande Frequenti <span class="text-red-500">(FAQ)</span>
+              </h2>
+              <p class="mt-3 text-lg text-slate-400">
+                Tutto quello che c'è da sapere prima di iniziare a lavorare
+                insieme e richiedere un preventivo.
+              </p>
+            </div>
+
+            <div class="space-y-4">
+              <!-- DOMANDA 1 -->
+              <div
+                class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
+              >
+                <button
+                  type="button"
+                  class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none cursor-pointer"
+                >
+                  <span
+                    class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
                   >
-                    Accetto bonifico bancario e principali metodi di pagamento
-                    digitale. Di norma definiamo un piccolo acconto iniziale e
-                    il saldo finale al collaudo del sito.
-                  </p>
+                    <span class="text-red-500 font-mono text-base">01.</span>
+                    Quanto tempo ci vuole per realizzare il sito?
+                  </span>
+                  <svg
+                    class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                >
+                  <div class="overflow-hidden">
+                    <p
+                      class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
+                    >
+                      I tempi variano in base alla complessità: un sito vetrina o
+                      un portfolio richiede solitamente dai 5 ai 7 giorni
+                      lavorativi dall'approvazione dei contenuti.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DOMANDA 2 -->
+              <div
+                class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
+              >
+                <button
+                  type="button"
+                  class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none cursor-pointer"
+                >
+                  <span
+                    class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
+                  >
+                    <span class="text-red-500 font-mono text-base">02.</span> Cosa
+                    devo fornire per iniziare?
+                  </span>
+                  <svg
+                    class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                >
+                  <div class="overflow-hidden">
+                    <p
+                      class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
+                    >
+                      Ti basta un'idea di base, eventuali testi descrittivi, logo
+                      o immagini della tua attività. Se non li hai, ti supporto io
+                      nella creazione e nella scelta dei contenuti ideali.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DOMANDA 3 -->
+              <div
+                class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
+              >
+                <button
+                  type="button"
+                  class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none cursor-pointer"
+                >
+                  <span
+                    class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
+                  >
+                    <span class="text-red-500 font-mono text-base">03.</span> Il
+                    sito sarà visibile da smartphone?
+                  </span>
+                  <svg
+                    class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                >
+                  <div class="overflow-hidden">
+                    <p
+                      class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
+                    >
+                      Assolutamente sì. Tutti i siti sono progettati con un
+                      approccio mobile-first e testati rigorosamente su
+                      dispositivi iOS e Android per garantire una fluidità
+                      perfetta.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DOMANDA 4 -->
+              <div
+                class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
+              >
+                <button
+                  type="button"
+                  class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none cursor-pointer"
+                >
+                  <span
+                    class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
+                  >
+                    <span class="text-red-500 font-mono text-base">04.</span> Come
+                    funziona l'assistenza post-lancio?
+                  </span>
+                  <svg
+                    class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                >
+                  <div class="overflow-hidden">
+                    <p
+                      class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
+                    >
+                      Anche dopo la pubblicazione rimango a disposizione per
+                      eventuali aggiornamenti, ottimizzazioni o modifiche
+                      strutturali concordate in base alle tue esigenze.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DOMANDA 5 -->
+              <div
+                class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
+              >
+                <button
+                  type="button"
+                  class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none cursor-pointer"
+                >
+                  <span
+                    class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
+                  >
+                    <span class="text-red-500 font-mono text-base">05.</span> Ci
+                    sono costi nascosti o canoni mensili?
+                  </span>
+                  <svg
+                    class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                >
+                  <div class="overflow-hidden">
+                    <p
+                      class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
+                    >
+                      Nessun costo nascosto. Il preventivo fornito è chiaro e
+                      definitivo. Una volta saldato il lavoro, il codice e la
+                      struttura del sito rimangono interamente di tua proprietà.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DOMANDA 6 -->
+              <div
+                class="faq-item border border-slate-800 rounded-xl bg-slate-800/50 overflow-hidden transition-all duration-300 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10"
+              >
+                <button
+                  type="button"
+                  class="faq-toggle w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none select-none cursor-pointer"
+                >
+                  <span
+                    class="text-lg font-semibold text-white transition-colors duration-200 hover:text-red-400 flex items-center gap-2"
+                  >
+                    <span class="text-red-500 font-mono text-base">06.</span> Come
+                    funziona la gestione di Dominio e Hosting?
+                  </span>
+                  <svg
+                    class="faq-icon w-5 h-5 text-red-500 transform transition-transform duration-300 ease-in-out shrink-0 ml-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out"
+                >
+                  <div class="overflow-hidden">
+                    <p
+                      class="px-6 pb-5 text-slate-300 leading-relaxed border-t border-slate-800/50 pt-3 opacity-0 transition-opacity duration-300 ease-in-out faq-text"
+                    >
+                      Posso guidarti nella registrazione del tuo dominio
+                      personalizzato (.it, .com) o configurare la pubblicazione
+                      tramite il tuo hosting a seconda del tuo budget e
+                      delle tue necessità.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </section>
+      </main>
+
+      <!-- FOOTER -->
+      <footer
+        class="border-t border-slate-900 bg-slate-950/80 text-center py-6 text-xs text-slate-500 font-mono relative z-10 w-full"
+      >
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center space-y-4">
+          <div class="flex items-center space-x-6">
+            <a
+              href="https://github.com/ngwebdesigner"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-500 hover:text-cyan-400 transition-colors"
+              aria-label="GitHub"
+            >
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://tiktok.com/@ngwebdesigner"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-500 hover:text-cyan-300 transition-colors"
+              aria-label="TikTok"
+            >
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.13z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://instagram.com/nicuale99"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-500 hover:text-pink-400 transition-colors"
+              aria-label="Instagram"
+            >
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                />
+              </svg>
+            </a>
+          </div>
+          <p>© 2026 NG Web Designer • Nicusor George Alexandru</p>
         </div>
-      </section>
+      </footer>
 
-      <!-- SCRIPT JAVASCRIPT CON ANIMAZIONI FLUIDE -->
-      <script>
-        document.addEventListener("DOMContentLoaded", () => {
-          const faqToggles = document.querySelectorAll(
-            "#faq-preventivi .faq-toggle",
-          );
+    </div>
 
-          faqToggles.forEach((toggle) => {
-            toggle.addEventListener("click", () => {
-              const item = toggle.closest(".faq-item");
-              const content = item.querySelector(".faq-content");
-              const text = item.querySelector(".faq-text");
-              const icon = toggle.querySelector(".faq-icon");
-              const isOpen = content.classList.contains("grid-rows-[1fr]");
-
-              // Chiudi le altre FAQ aperte nella sezione preventivi
-              document
-                .querySelectorAll("#faq-preventivi .faq-item")
-                .forEach((otherItem) => {
-                  if (otherItem !== item) {
-                    const otherContent =
-                      otherItem.querySelector(".faq-content");
-                    const otherText = otherItem.querySelector(".faq-text");
-                    const otherIcon = otherItem.querySelector(".faq-icon");
-
-                    otherContent.classList.remove("grid-rows-[1fr]");
-                    otherContent.classList.add("grid-rows-[0fr]");
-                    otherText.classList.remove("opacity-100");
-                    otherText.classList.add("opacity-0");
-                    otherIcon.classList.remove("rotate-180");
-                  }
-                });
-
-              // Toggle della domanda cliccata
-              if (isOpen) {
-                content.classList.remove("grid-rows-[1fr]");
-                content.classList.add("grid-rows-[0fr]");
-                text.classList.remove("opacity-100");
-                text.classList.add("opacity-0");
-                icon.classList.remove("rotate-180");
-              } else {
-                content.classList.remove("grid-rows-[0fr]");
-                content.classList.add("grid-rows-[1fr]");
-                setTimeout(() => {
-                  text.classList.remove("opacity-0");
-                  text.classList.add("opacity-100");
-                }, 100);
-                icon.classList.add("rotate-180");
-              }
-            });
-          });
-        });
-      </script>
-    </main>
-
-    <!-- FOOTER -->
-    <footer
-      class="border-t border-slate-900 bg-slate-950/80 text-center py-6 text-xs text-slate-500 font-mono relative z-10 w-full"
-    >
-      <div class="max-w-7xl mx-auto px-4 flex flex-col items-center space-y-4">
-        <div class="flex items-center space-x-6">
-          <a
-            href="https://github.com/ngwebdesigner"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-slate-500 hover:text-cyan-400 transition-colors"
-            aria-label="GitHub"
-          >
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path
-                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://tiktok.com/@ngwebdesigner"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-slate-500 hover:text-cyan-300 transition-colors"
-            aria-label="TikTok"
-          >
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path
-                d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.13z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://instagram.com/nicuale99"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-slate-500 hover:text-pink-400 transition-colors"
-            aria-label="Instagram"
-          >
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path
-                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
-              />
-            </svg>
-          </a>
-        </div>
-        <p>© 2026 NG Web Designer • Nicusor George Alexandru</p>
-      </div>
-    </footer>
-
-    <!-- POP-UP REGOLAMENTO PROMO (CON TESTI PIÙ GRANDI) -->
+    <!-- POP-UP REGOLAMENTO PROMO -->
     <div
       id="promo-modal"
       class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300 ease-out"
     >
-      <!-- Box della Modal -->
       <div
         id="promo-modal-box"
         class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 sm:p-8 text-slate-100 shadow-2xl relative transform scale-95 translate-y-4 opacity-0 transition-all duration-300 ease-out"
       >
-        <!-- Pulsante Chiudi X -->
         <button
           id="close-promo-modal"
           type="button"
-          class="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl font-bold p-2 transition-colors"
+          class="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl font-bold p-2 transition-colors cursor-pointer"
         >
           &times;
         </button>
 
-        <!-- Titolo Modal -->
         <div class="flex items-center gap-2 mb-5">
           <span
             class="bg-red-500/10 text-red-500 font-mono text-xs font-bold px-3 py-1 rounded-full border border-red-500/20 uppercase tracking-wider"
           >
             Regolamento Promo
           </span>
-          <h3 class="text-xl font-extrabold text-white">
-            Porta 3 Amici
-          </h3>
+          <h3 class="text-xl font-extrabold text-white">Porta 3 Amici</h3>
         </div>
 
-        <!-- Contenuto Regolamento (Testo Ingrandito) -->
         <div
           class="text-sm text-slate-200 space-y-4 leading-relaxed border-t border-slate-800 pt-4"
         >
@@ -897,12 +745,11 @@
           </p>
         </div>
 
-        <!-- Bottone d'azione -->
         <div class="mt-8 pt-4 border-t border-slate-800 flex justify-end">
           <button
             id="close-promo-modal-btn"
             type="button"
-            class="bg-red-600 hover:bg-red-700 text-white font-bold text-sm px-6 py-3 rounded-xl transition-all hover:shadow-lg hover:shadow-red-600/30"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold text-sm px-6 py-3 rounded-xl transition-all hover:shadow-lg hover:shadow-red-600/30 cursor-pointer"
           >
             Ho Capito
           </button>
@@ -910,37 +757,28 @@
       </div>
     </div>
 
-    <!-- SCRIPT JAVASCRIPT PER LE ANIMAZIONI -->
+    <!-- SCRIPTS -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        // Modal Promo
         const modal = document.getElementById("promo-modal");
         const modalBox = document.getElementById("promo-modal-box");
         const openBtn = document.getElementById("open-promo-modal");
         const closeBtn = document.getElementById("close-promo-modal");
         const closeBtn2 = document.getElementById("close-promo-modal-btn");
 
-        // Funzione per Aprire la Modal
         const openModal = () => {
           modal.classList.remove("pointer-events-none", "opacity-0");
           modal.classList.add("opacity-100");
-
           modalBox.classList.remove("scale-95", "translate-y-4", "opacity-0");
           modalBox.classList.add("scale-100", "translate-y-0", "opacity-100");
         };
 
-        // Funzione per Chiudere la Modal con Animazione
         const closeModal = () => {
-          modalBox.classList.remove(
-            "scale-100",
-            "translate-y-0",
-            "opacity-100",
-          );
+          modalBox.classList.remove("scale-100", "translate-y-0", "opacity-100");
           modalBox.classList.add("scale-95", "translate-y-4", "opacity-0");
-
           modal.classList.remove("opacity-100");
           modal.classList.add("opacity-0");
-
-          // Disabilita i click sullo sfondo dopo il termine della transizione (300ms)
           setTimeout(() => {
             modal.classList.add("pointer-events-none");
           }, 300);
@@ -948,26 +786,59 @@
 
         if (openBtn && modal) {
           openBtn.addEventListener("click", openModal);
-
           [closeBtn, closeBtn2].forEach((btn) => {
             if (btn) btn.addEventListener("click", closeModal);
           });
-
-          // Chiudi se si clicca fuori dal box
           modal.addEventListener("click", (e) => {
             if (e.target === modal) closeModal();
           });
-
-          // Chiudi con il tasto ESC della tastiera
           document.addEventListener("keydown", (e) => {
-            if (
-              e.key === "Escape" &&
-              !modal.classList.contains("pointer-events-none")
-            ) {
+            if (e.key === "Escape" && !modal.classList.contains("pointer-events-none")) {
               closeModal();
             }
           });
         }
+
+        // FAQ Accordion
+        const faqToggles = document.querySelectorAll("#faq-preventivi .faq-toggle");
+        faqToggles.forEach((toggle) => {
+          toggle.addEventListener("click", () => {
+            const item = toggle.closest(".faq-item");
+            const content = item.querySelector(".faq-content");
+            const text = item.querySelector(".faq-text");
+            const icon = toggle.querySelector(".faq-icon");
+            const isOpen = content.classList.contains("grid-rows-[1fr]");
+
+            document.querySelectorAll("#faq-preventivi .faq-item").forEach((otherItem) => {
+              if (otherItem !== item) {
+                const otherContent = otherItem.querySelector(".faq-content");
+                const otherText = otherItem.querySelector(".faq-text");
+                const otherIcon = otherItem.querySelector(".faq-icon");
+                otherContent.classList.remove("grid-rows-[1fr]");
+                otherContent.classList.add("grid-rows-[0fr]");
+                otherText.classList.remove("opacity-100");
+                otherText.classList.add("opacity-0");
+                otherIcon.classList.remove("rotate-180");
+              }
+            });
+
+            if (isOpen) {
+              content.classList.remove("grid-rows-[1fr]");
+              content.classList.add("grid-rows-[0fr]");
+              text.classList.remove("opacity-100");
+              text.classList.add("opacity-0");
+              icon.classList.remove("rotate-180");
+            } else {
+              content.classList.remove("grid-rows-[0fr]");
+              content.classList.add("grid-rows-[1fr]");
+              setTimeout(() => {
+                text.classList.remove("opacity-0");
+                text.classList.add("opacity-100");
+              }, 100);
+              icon.classList.add("rotate-180");
+            }
+          });
+        });
       });
     </script>
   </body>
