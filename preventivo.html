@@ -257,7 +257,8 @@
           </div>
 
           <form
-            action="https://formspree.io/f/xkjovvwq"
+            id="form-preventivo"
+            action="https://api.ngwebdesigner.com"
             method="POST"
             enctype="multipart/form-data"
             class="space-y-5"
@@ -360,8 +361,12 @@
               ></div>
             </div>
 
+            <!-- FEEDBACK MESSAGGIO -->
+            <div id="form-feedback" class="hidden text-center text-xs p-3 rounded-xl font-mono"></div>
+
             <button
               type="submit"
+              id="submit-btn"
               class="w-full py-3.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/30 hover:shadow-cyan-500/50 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Invia Richiesta</span>
@@ -791,6 +796,51 @@
     <!-- SCRIPTS -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        // Gestione Invio Modulo via AJAX a Cloudflare Worker
+        const form = document.getElementById("form-preventivo");
+        const feedback = document.getElementById("form-feedback");
+        const submitBtn = document.getElementById("submit-btn");
+
+        if (form) {
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            // Disabilita pulsante e mostra uno stato di caricamento
+            submitBtn.disabled = true;
+            submitBtn.classList.add("opacity-50", "cursor-not-allowed");
+            feedback.classList.remove("hidden", "bg-emerald-500/20", "text-emerald-400", "border-emerald-500/30", "bg-rose-500/20", "text-rose-400", "border-rose-500/30");
+            feedback.classList.add("bg-indigo-500/20", "text-indigo-300", "border", "border-indigo-500/30");
+            feedback.textContent = "Invio della richiesta in corso...";
+
+            const formData = new FormData(form);
+
+            try {
+              const response = await fetch(form.action, {
+                method: "POST",
+                body: formData
+              });
+
+              const result = await response.json();
+
+              if (response.ok && result.success) {
+                feedback.classList.remove("bg-indigo-500/20", "text-indigo-300", "border-indigo-500/30");
+                feedback.classList.add("bg-emerald-500/20", "text-emerald-400", "border", "border-emerald-500/30");
+                feedback.textContent = "Richiesta inviata con successo! Ti risponderemo al più presto.";
+                form.reset();
+              } else {
+                throw new Error(result.error || "Impossibile inviare il modulo.");
+              }
+            } catch (err) {
+              feedback.classList.remove("bg-indigo-500/20", "text-indigo-300", "border-indigo-500/30");
+              feedback.classList.add("bg-rose-500/20", "text-rose-400", "border", "border-rose-500/30");
+              feedback.textContent = "Si è verificato un errore durante l'invio. Riprova più tardi.";
+            } finally {
+              submitBtn.disabled = false;
+              submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+            }
+          });
+        }
+
         // Modal Promo
         const modal = document.getElementById("promo-modal");
         const modalBox = document.getElementById("promo-modal-box");
