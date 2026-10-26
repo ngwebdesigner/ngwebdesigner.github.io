@@ -1,0 +1,666 @@
+<!doctype html>
+<html class="w-full scroll-smooth" lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta
+      name="google-site-verification"
+      content="8ev97rjsfKJd9wjLWiD3kgCbrFY-GO0ZYQ4z4PnIYDA"
+    />
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/jpeg" href="./immagini/logo.jpg" />
+
+    <title>NG Web Designer - Store Landing Page</title>
+
+    <meta
+      name="description"
+      content="NG Web Designer Store - Acquista la tua Landing Page professionale online. Pacchetti Small (€350), Medium (€450) e Large (€600)."
+    />
+    <meta name="author" content="Nicusor George Alexandru" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Stripe.js SDK (versione Dahlia per embedded form) -->
+    <script src="https://js.stripe.com/dahlia/stripe.js"></script>
+
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .code-font {
+        font-family: "Fira Code", monospace;
+      }
+
+      .tech-bg {
+        background-color: #030712;
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(99, 102, 241, 0.05) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(99, 102, 241, 0.05) 1px,
+            transparent 1px
+          );
+        background-size: 40px 40px;
+      }
+
+      @keyframes pulse-slow {
+        0%, 100% {
+          opacity: 0.3;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: scale(1.05);
+        }
+      }
+      .animate-pulse-slow {
+        animation: pulse-slow 6s ease-in-out infinite;
+      }
+    </style>
+  </head>
+  <body
+    class="tech-bg text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black relative w-full"
+  >
+    <!-- WRAPPER OVERFLOW -->
+    <div
+      class="overflow-x-clip w-full min-h-screen flex flex-col justify-between relative"
+    >
+      <!-- CONTENITORE CLIP PER SAFARI IOS -->
+      <div
+        class="absolute inset-x-0 top-0 h-[500px] overflow-hidden pointer-events-none -z-10 w-full"
+      >
+        <div
+          class="absolute top-0 left-1/2 -translate-x-1/2 w-[280px] sm:w-[500px] md:w-[600px] h-[300px] bg-gradient-to-tr from-indigo-600/20 to-cyan-400/20 blur-[100px] rounded-full animate-pulse-slow"
+        ></div>
+      </div>
+
+      <!-- HEADER & NAVBAR FISSA -->
+      <header
+        class="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-xl border-b border-indigo-500/20 px-4 sm:px-6 py-4 shadow-lg shadow-indigo-950/30 w-full"
+      >
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+          <!-- BRAND / LOGO JPG -->
+          <a href="index.html" class="flex items-center gap-3 group">
+            <div
+              class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 via-cyan-500 to-emerald-400 p-0.5 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300 overflow-hidden shrink-0"
+            >
+              <img
+                src="./immagini/logo.jpg"
+                alt="NG Web Designer Logo"
+                class="w-full h-full object-cover rounded-[10px]"
+              />
+            </div>
+
+            <div>
+              <span
+                class="font-extrabold text-xl tracking-tight text-white group-hover:text-cyan-400 transition-colors duration-300"
+              >
+                NG <span class="text-slate-400 font-normal">Web Designer</span>
+              </span>
+            </div>
+          </a>
+
+          <div class="flex items-center gap-3">
+            <!-- PULSANTE CARRELLO FLOTTANTE NELLA NAVBAR -->
+            <button
+              id="cart-btn"
+              type="button"
+              class="relative bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-indigo-500/40 px-3.5 py-2 rounded-xl flex items-center gap-2 text-xs font-mono transition-all duration-300 cursor-pointer shadow-md"
+            >
+              <span>🛒</span>
+              <span class="hidden sm:inline font-bold">Carrello</span>
+              <span
+                id="cart-badge"
+                class="bg-cyan-500 text-slate-950 font-bold px-2 py-0.5 rounded-full text-[10px]"
+                >0</span
+              >
+            </button>
+
+            <select
+              id="page-selector"
+              onchange="location = this.value"
+              class="bg-slate-900/90 text-slate-200 font-mono text-xs px-3 sm:px-4 py-2.5 rounded-xl border border-indigo-500/40 hover:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-300 cursor-pointer shadow-inner"
+            >
+              <option value="index.html">Homepage</option>
+              <option value="chi-sono.html">Chi Sono</option>
+              <option value="preventivo.html">Richiesta Sito Web</option>
+              <option value="landing-page.html" selected>Store Landing Page</option>
+              <option value="testimonianze.html">Testimonianze</option>
+            </select>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENUTO STORE E-COMMERCE -->
+      <main
+        class="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex-grow w-full space-y-16"
+      >
+        <!-- HERO INTRODUTTIVA STORE -->
+        <div class="text-center max-w-3xl mx-auto space-y-4">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs"
+          >
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>E-Commerce Digitale Diretto</span>
+          </div>
+          <h1
+            class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight"
+          >
+            Acquista la tua
+            <span
+              class="bg-gradient-to-r from-cyan-400 via-indigo-400 to-emerald-400 bg-clip-text text-transparent"
+              >Landing Page</span
+            >
+          </h1>
+          <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+            Seleziona il pacchetto perfetto per il tuo business, aggiungilo al carrello e completa l'ordine in pochi passaggi senza attese.
+          </p>
+        </div>
+
+        <!-- GRIGLIA PRODOTTI (I 3 PACCHETTI) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          
+          <!-- PRODOTTO 1: SMALL -->
+          <div
+            class="bg-slate-900/70 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-xl flex flex-col justify-between hover:border-cyan-500/50 hover:shadow-cyan-500/10 transition-all duration-300 relative group"
+          >
+            <div>
+              <div class="flex justify-between items-center mb-4">
+                <span
+                  class="font-mono text-[10px] text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider"
+                  >Essenziale</span
+                >
+                <span class="text-xs font-mono text-slate-500">Cod. LP-350</span>
+              </div>
+              <h3 class="text-2xl font-extrabold text-white mb-2">Small</h3>
+              <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                Ideale come pagina di presentazione o biglietto da visita digitale rapido e professionale.
+              </p>
+              <div class="mb-6 pb-6 border-b border-slate-800">
+                <div class="flex items-baseline gap-1">
+                  <span class="text-3xl sm:text-4xl font-black text-white">€350</span>
+                  <span class="text-xs text-slate-400">/ una tantum</span>
+                </div>
+                <span class="text-[11px] text-emerald-400 font-mono mt-1 block">✓ Consegna in 3-5 giorni</span>
+              </div>
+              <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                <li class="flex items-center gap-2">
+                  <span class="text-cyan-400 font-bold">✓</span> 1 Sezione di presentazione
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-cyan-400 font-bold">✓</span> Layout Responsive (Mobile/PC)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-cyan-400 font-bold">✓</span> Modulo contatto / WhatsApp
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-cyan-400 font-bold">✓</span> Ottimizzazione velocita base
+                </li>
+              </ul>
+            </div>
+            <button
+              type="button"
+              onclick="aggiungiAlCarrello('LP-SMALL', 'Landing Page - Small', 350)"
+              class="w-full py-3.5 bg-slate-800 hover:bg-cyan-400 hover:text-slate-950 text-white font-bold text-xs rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-md group-hover:scale-[1.02]"
+            >
+              <span>Aggiungi al Carrello</span>
+              <span>🛒</span>
+            </button>
+          </div>
+
+          <!-- PRODOTTO 2: MEDIUM (BEST SELLER) -->
+          <div
+            class="bg-slate-900/90 border-2 border-indigo-500/60 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl flex flex-col justify-between hover:border-cyan-400 hover:shadow-indigo-500/20 transition-all duration-300 relative transform md:-translate-y-2 group"
+          >
+            <div
+              class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white text-[10px] font-bold font-mono px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md"
+            >
+              Più Richiesto 🔥
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-4 mt-2">
+                <span
+                  class="font-mono text-[10px] text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider"
+                  >Business</span
+                >
+                <span class="text-xs font-mono text-slate-400">Cod. LP-450</span>
+              </div>
+              <h3 class="text-2xl font-extrabold text-white mb-2">Medium</h3>
+              <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                Illustrazione completa di prodotti o servizi con grafica curata, animazioni ed interattività.
+              </p>
+              <div class="mb-6 pb-6 border-b border-slate-800">
+                <div class="flex items-baseline gap-1">
+                  <span class="text-3xl sm:text-4xl font-black text-white">€450</span>
+                  <span class="text-xs text-slate-400">/ una tantum</span>
+                </div>
+                <span class="text-[11px] text-emerald-400 font-mono mt-1 block">✓ Consegna in 5-7 giorni</span>
+              </div>
+              <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                <li class="flex items-center gap-2">
+                  <span class="text-indigo-400 font-bold">✓</span> Fino a 4-5 Sezioni strutturate
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-indigo-400 font-bold">✓</span> Animazioni ed effetti al movimento
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-indigo-400 font-bold">✓</span> Sezione FAQ / Dettagli prodotto
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-indigo-400 font-bold">✓</span> Collegamento Social & Mappe
+                </li>
+              </ul>
+            </div>
+            <button
+              type="button"
+              onclick="aggiungiAlCarrello('LP-MEDIUM', 'Landing Page - Medium', 450)"
+              class="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-xs rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 group-hover:scale-[1.02]"
+            >
+              <span>Aggiungi al Carrello</span>
+              <span>🛒</span>
+            </button>
+          </div>
+
+          <!-- PRODOTTO 3: LARGE -->
+          <div
+            class="bg-slate-900/70 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-xl flex flex-col justify-between hover:border-emerald-500/50 hover:shadow-emerald-500/10 transition-all duration-300 relative group"
+          >
+            <div>
+              <div class="flex justify-between items-center mb-4">
+                <span
+                  class="font-mono text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider"
+                  >Enterprise</span
+                >
+                <span class="text-xs font-mono text-slate-500">Cod. LP-600</span>
+              </div>
+              <h3 class="text-2xl font-extrabold text-white mb-2">Large</h3>
+              <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                Landing page custom senza limiti con componenti interattivi avanzati, massima conversione e supporto.
+              </p>
+              <div class="mb-6 pb-6 border-b border-slate-800">
+                <div class="flex items-baseline gap-1">
+                  <span class="text-3xl sm:text-4xl font-black text-white">€600</span>
+                  <span class="text-xs text-slate-400">/ una tantum</span>
+                </div>
+                <span class="text-[11px] text-emerald-400 font-mono mt-1 block">✓ Consegna Prioritaria</span>
+              </div>
+              <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                <li class="flex items-center gap-2">
+                  <span class="text-emerald-400 font-bold">✓</span> Struttura custom illimitata
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-emerald-400 font-bold">✓</span> Transizioni visive ad alto impatto
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-emerald-400 font-bold">✓</span> Integrazioni API / moduli complessi
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-emerald-400 font-bold">✓</span> 1 Anno di Assistenza inclusa
+                </li>
+              </ul>
+            </div>
+            <button
+              type="button"
+              onclick="aggiungiAlCarrello('LP-LARGE', 'Landing Page - Large', 600)"
+              class="w-full py-3.5 bg-slate-800 hover:bg-emerald-400 hover:text-slate-950 text-white font-bold text-xs rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-md group-hover:scale-[1.02]"
+            >
+              <span>Aggiungi al Carrello</span>
+              <span>🛒</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- GARANZIA & SICUREZZA BANNER -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6">
+          <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center gap-3">
+            <span class="text-2xl">⚡</span>
+            <div>
+              <h4 class="text-xs font-bold text-white">Sviluppo Rapido</h4>
+              <p class="text-[11px] text-slate-400">Codice pulito, pronto nei tempi prestabiliti.</p>
+            </div>
+          </div>
+          <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center gap-3">
+            <span class="text-2xl">🔒</span>
+            <div>
+              <h4 class="text-xs font-bold text-white">Pagamenti Sicuri</h4>
+              <p class="text-[11px] text-slate-400">Transazioni protette da Stripe.</p>
+            </div>
+          </div>
+          <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex items-center gap-3">
+            <span class="text-2xl">🛠️</span>
+            <div>
+              <h4 class="text-xs font-bold text-white">Supporto Tecnico</h4>
+              <p class="text-[11px] text-slate-400">Assistenza diretta con NG Web Designer.</p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- FOOTER -->
+      <footer
+        class="border-t border-slate-900 bg-slate-950/80 text-center py-6 text-xs text-slate-500 font-mono relative z-10 w-full"
+      >
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center space-y-4">
+          <p>© 2026 NG Web Designer • Nicusor George Alexandru</p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- CARRELLO DRAWER SLIDE-OVER -->
+    <div
+      id="cart-drawer"
+      class="fixed inset-0 z-50 overflow-hidden pointer-events-none transition-opacity duration-300 opacity-0"
+    >
+      <div
+        id="cart-backdrop"
+        class="absolute inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity"
+      ></div>
+
+      <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+        <div
+          id="cart-panel"
+          class="w-screen max-w-md bg-slate-900 border-l border-slate-800 text-slate-100 shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out pointer-events-auto"
+        >
+          <!-- HEADER CARRELLO -->
+          <div class="p-6 border-b border-slate-800 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🛒</span>
+              <h3 class="text-lg font-extrabold text-white">Il Tuo Carrello</h3>
+            </div>
+            <button
+              id="close-cart-btn"
+              type="button"
+              class="text-slate-400 hover:text-white text-2xl font-bold p-1 cursor-pointer transition-colors"
+            >
+              &times;
+            </button>
+          </div>
+
+          <!-- LISTA PRODOTTI NEL CARRELLO -->
+          <div id="cart-items-container" class="p-6 overflow-y-auto flex-grow space-y-4">
+            <!-- Inserito dinamicamente via JS -->
+          </div>
+
+          <!-- FOOTER CARRELLO -->
+          <div class="p-6 border-t border-slate-800 bg-slate-950/50 space-y-4">
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-slate-400 font-mono">Totale Ordine:</span>
+              <span id="cart-total" class="text-2xl font-black text-cyan-400">€0</span>
+            </div>
+
+            <button
+              id="checkout-btn"
+              type="button"
+              onclick="apriCheckout()"
+              class="w-full py-3.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/30 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span>Procedi al Pagamento</span>
+              <span>💳</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL CHECKOUT CON EMBEDDED FORM DI STRIPE -->
+    <div
+      id="checkout-modal"
+      class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300"
+    >
+      <div
+        id="checkout-box"
+        class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 text-slate-100 shadow-2xl relative transform scale-95 translate-y-4 transition-all duration-300 max-h-[90vh] overflow-y-auto"
+      >
+        <button
+          id="close-checkout-btn"
+          type="button"
+          class="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl font-bold p-2 cursor-pointer transition-colors"
+        >
+          &times;
+        </button>
+
+        <div class="mb-6">
+          <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-1">Cassa Sicura Stripe</span>
+          <h3 class="text-2xl font-extrabold text-white">Completa il Pagamento</h3>
+        </div>
+
+        <!-- CONTENITORE DOVE STRIPE RENDERIZZA IL MODULO INTEGRATO -->
+        <div id="checkout-form" class="space-y-4">
+          <!-- Il form di pagamento Stripe verrà iniettato qui via SDK -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICA AGGIUNTA PRODOTTO -->
+    <div
+      id="toast"
+      class="fixed bottom-5 right-5 z-50 bg-slate-900 border border-cyan-500/40 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-10 opacity-0 transition-all duration-300 pointer-events-none"
+    >
+      <span class="text-xl">✅</span>
+      <div>
+        <h5 class="text-xs font-bold text-white">Prodotto aggiunto!</h5>
+        <p id="toast-message" class="text-[11px] text-slate-400">Pacchetto inserito nel carrello.</p>
+      </div>
+    </div>
+
+    <!-- JAVASCRIPT E-COMMERCE & STRIPE SDK INTEGRATION -->
+    <script>
+      // CHIAVE PUBBLICA STRIPE INSERITA
+      const stripe = Stripe('pk_live_51UUoGoE1hhzizsCmXzNtEf4FtIETtxDFer8IBUc2Hg0YCSqjkQtkxT5Wy5QCItV4UANDX0gMyCOwsS0cyPDxTuwI00FcKfxJh1');
+
+      // Indirizzo del tuo server backend (in locale usa http://localhost:4242, in produzione inserisci l'URL di Render/Vercel)
+      const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:4242'
+        : 'https://NOME-DEL-TUO-SERVER.onrender.com';
+
+      // STATO DEL CARRELLO
+      let cart = [];
+
+      // ELEMENTI DOM
+      const cartBtn = document.getElementById("cart-btn");
+      const cartBadge = document.getElementById("cart-badge");
+      const cartDrawer = document.getElementById("cart-drawer");
+      const cartPanel = document.getElementById("cart-panel");
+      const cartBackdrop = document.getElementById("cart-backdrop");
+      const closeCartBtn = document.getElementById("close-cart-btn");
+      const cartItemsContainer = document.getElementById("cart-items-container");
+      const cartTotal = document.getElementById("cart-total");
+      const checkoutBtn = document.getElementById("checkout-btn");
+
+      const checkoutModal = document.getElementById("checkout-modal");
+      const checkoutBox = document.getElementById("checkout-box");
+      const closeCheckoutBtn = document.getElementById("close-checkout-btn");
+
+      // AGGIUNGI AL CARRELLO
+      function aggiungiAlCarrello(id, nome, prezzo) {
+        const itemEsistente = cart.find(i => i.id === id);
+        if (itemEsistente) {
+          itemEsistente.quantita++;
+        } else {
+          cart.push({ id, nome, prezzo, quantita: 1 });
+        }
+        aggiornaInterfacciaCarrello();
+        mostraToast(`${nome} aggiunto al carrello`);
+        apriCarrello();
+      }
+
+      // RIMUOVI O MODIFICA QUANTITÀ
+      function cambiaQuantita(id, variazione) {
+        const index = cart.findIndex(i => i.id === id);
+        if (index !== -1) {
+          cart[index].quantita += variazione;
+          if (cart[index].quantita <= 0) {
+            cart.splice(index, 1);
+          }
+        }
+        aggiornaInterfacciaCarrello();
+      }
+
+      // AGGIORNA INTERFACCIA CARRELLO & BADGE
+      function aggiornaInterfacciaCarrello() {
+        const totaleQuantita = cart.reduce((sum, item) => sum + item.quantita, 0);
+        const totalePrezzo = cart.reduce((sum, item) => sum + (item.prezzo * item.quantita), 0);
+
+        cartBadge.textContent = totaleQuantita;
+        cartTotal.textContent = `€${totalePrezzo}`;
+
+        if (cart.length === 0) {
+          cartItemsContainer.innerHTML = `
+            <div class="text-center py-12 text-slate-500">
+              <span class="text-4xl block mb-2">🛍️</span>
+              <p class="text-xs font-mono">Il carrello è vuoto</p>
+            </div>
+          `;
+          checkoutBtn.disabled = true;
+        } else {
+          checkoutBtn.disabled = false;
+          cartItemsContainer.innerHTML = cart.map(item => `
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex justify-between items-center">
+              <div>
+                <h4 class="text-xs font-bold text-white">${item.nome}</h4>
+                <p class="text-xs text-cyan-400 font-mono mt-0.5">€${item.prezzo} cad.</p>
+              </div>
+              <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-2 py-1">
+                <button type="button" onclick="cambiaQuantita('${item.id}', -1)" class="text-xs text-slate-400 hover:text-white font-bold px-1.5 cursor-pointer">-</button>
+                <span class="text-xs font-mono text-white font-bold">${item.quantita}</span>
+                <button type="button" onclick="cambiaQuantita('${item.id}', 1)" class="text-xs text-slate-400 hover:text-white font-bold px-1.5 cursor-pointer">+</button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      // APRI E CHIUDI CARRELLO DRAWER
+      function apriCarrello() {
+        cartDrawer.classList.remove("pointer-events-none", "opacity-0");
+        cartDrawer.classList.add("opacity-100");
+        cartPanel.classList.remove("translate-x-full");
+      }
+
+      function chiudiCarrello() {
+        cartPanel.classList.add("translate-x-full");
+        cartDrawer.classList.remove("opacity-100");
+        cartDrawer.classList.add("opacity-0");
+        setTimeout(() => {
+          cartDrawer.classList.add("pointer-events-none");
+        }, 300);
+      }
+
+      // APRI E INIZIALIZZA STRIPE EMBEDDED CHECKOUT
+      async function apriCheckout() {
+        chiudiCarrello();
+        checkoutModal.classList.remove("pointer-events-none", "opacity-0");
+        checkoutModal.classList.add("opacity-100");
+        checkoutBox.classList.remove("scale-95", "translate-y-4");
+        checkoutBox.classList.add("scale-100", "translate-y-0");
+
+        document.getElementById('checkout-form').innerHTML = `
+          <div class="text-center py-8 text-cyan-400 text-xs font-mono animate-pulse">
+            Caricamento del modulo di pagamento sicuro...
+          </div>
+        `;
+
+        try {
+          const appearance = {
+            "theme": "stripe",
+            "labels": "auto",
+            "inputs": "spaced",
+            "variables": {
+              "borderRadius": "8px",
+              "colorBackground": "#030712",
+              "colorDanger": "#f43f5e",
+              "colorPrimary": "#06b6d4",
+              "colorSuccess": "#10b981",
+              "colorText": "#f8fafc",
+              "fontFamily": "Plus Jakarta Sans, sans-serif",
+              "fontSizeBase": "14px",
+              "spacingUnit": "4px"
+            }
+          };
+
+          const response = await fetch(`${BACKEND_URL}/api/create-checkout-session`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: cart })
+          });
+          
+          const json = await response.json();
+          
+          if (!json.client_secret) {
+            throw new Error(json.error || "Impossibile inizializzare la sessione di pagamento.");
+          }
+
+          const checkout = stripe.initCheckoutFormSdk({ clientSecret: json.client_secret, appearance });
+          const form = checkout.createForm({ layout: 'expanded' });
+          
+          document.getElementById('checkout-form').innerHTML = ""; 
+          form.mount('#checkout-form');
+
+          const loadActionsResult = await checkout.loadActions();
+          if (loadActionsResult.type === 'success') {
+            form.on('confirm', async (event) => {
+              try {
+                await loadActionsResult.actions.confirm({ formConfirmEvent: event });
+              } catch (error) {
+                console.error('Errore di conferma pagamento:', error);
+              }
+            });
+          }
+        } catch (err) {
+          console.error(err);
+          document.getElementById('checkout-form').innerHTML = `
+            <div class="text-center py-6 text-rose-400 text-xs font-mono">
+              ${err.message || "Errore di connessione al server di pagamento."}
+            </div>
+          `;
+        }
+      }
+
+      function chiudiCheckout() {
+        checkoutBox.classList.remove("scale-100", "translate-y-0");
+        checkoutBox.classList.add("scale-95", "translate-y-4");
+        checkoutModal.classList.remove("opacity-100");
+        checkoutModal.classList.add("opacity-0");
+        setTimeout(() => {
+          checkoutModal.classList.add("pointer-events-none");
+        }, 300);
+      }
+
+      // TOAST NOTIFICATION
+      function mostraToast(messaggio) {
+        const toast = document.getElementById("toast");
+        document.getElementById("toast-message").textContent = messaggio;
+        toast.classList.remove("opacity-0", "translate-y-10", "pointer-events-none");
+        toast.classList.add("opacity-100", "translate-y-0");
+        setTimeout(() => {
+          toast.classList.remove("opacity-100", "translate-y-0");
+          toast.classList.add("opacity-0", "translate-y-10", "pointer-events-none");
+        }, 2500);
+      }
+
+      // EVENT LISTENERS
+      document.addEventListener("DOMContentLoaded", () => {
+        aggiornaInterfacciaCarrello();
+
+        if (cartBtn) cartBtn.addEventListener("click", apriCarrello);
+        if (closeCartBtn) closeCartBtn.addEventListener("click", chiudiCarrello);
+        if (cartBackdrop) cartBackdrop.addEventListener("click", chiudiCarrello);
+        if (closeCheckoutBtn) closeCheckoutBtn.addEventListener("click", chiudiCheckout);
+      });
+    </script>
+  </body>
+</html>
