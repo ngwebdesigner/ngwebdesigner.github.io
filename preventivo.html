@@ -375,6 +375,24 @@
               </label>
             </div>
 
+            <!-- CAMPO HONEYPOT ANTI-BOT (Nascosto agli utenti, i bot lo riempiono) -->
+            <div
+              class="hidden"
+              aria-hidden="true"
+              style="display: none !important"
+            >
+              <label for="confirmit_email"
+                >Non compilare questo campo se sei umano</label
+              >
+              <input
+                type="text"
+                id="confirmit_email"
+                name="confirmit_email"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+
             <!-- WIDGET CLOUDFLARE TURNSTILE -->
             <div class="flex justify-center pt-2 overflow-x-hidden">
               <div
@@ -869,6 +887,53 @@
               "border-indigo-500/30",
             );
             feedback.textContent = "Invio della richiesta in corso...";
+
+            // 1. Controllo Honeypot Anti-Bot
+            const honeyPotField = form.querySelector(
+              'input[name="confirmit_email"]',
+            );
+            if (honeyPotField && honeyPotField.value !== "") {
+              // È un bot: fingiamo che sia andato tutto bene ma blocchiamo l'invio reale
+              feedback.classList.remove(
+                "bg-indigo-500/20",
+                "text-indigo-300",
+                "border-indigo-500/30",
+              );
+              feedback.classList.add(
+                "bg-emerald-500/20",
+                "text-emerald-400",
+                "border",
+                "border-emerald-500/30",
+              );
+              feedback.textContent =
+                "Richiesta inviata con successo! Ti risponderemo al più presto.";
+              form.reset();
+              submitBtn.disabled = false;
+              submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+              return;
+            }
+
+            // 2. Controllo base email (presenza della @)
+            const emailInput = form.querySelector('input[name="email"]');
+            const emailValue = emailInput.value.trim();
+            if (!emailValue.includes("@")) {
+              feedback.classList.remove(
+                "bg-indigo-500/20",
+                "text-indigo-300",
+                "border-indigo-500/30",
+              );
+              feedback.classList.add(
+                "bg-rose-500/20",
+                "text-rose-400",
+                "border",
+                "border-rose-500/30",
+              );
+              feedback.textContent =
+                "Inserisci un indirizzo email valido contenente la chiocciola (@).";
+              submitBtn.disabled = false;
+              submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+              return;
+            }
 
             const formData = new FormData(form);
 
