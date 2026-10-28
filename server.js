@@ -8,11 +8,8 @@ const multer = require("multer");
 // Configurazione Multer per gestire i file in memoria
 const upload = multer();
 
-// Inizializza Stripe e Resend con le chiavi salvate nelle variabili d'ambiente
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2026-03-25.dahlia',
-});
-
+// Inizializza Stripe e Resend
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = express();
@@ -36,7 +33,7 @@ app.post("/api/create-checkout-session", upload.array('allegato'), async (req, r
       return res.status(400).json({ error: "Il carrello è vuoto" });
     }
 
-    const parsedItems = JSON.parse(items);
+    const parsedItems = typeof items === 'string' ? JSON.parse(items) : items;
 
     // 1. Prepara gli allegati per Resend (se presenti)
     const attachments = files && files.length > 0 ? files.map(file => ({
@@ -44,27 +41,32 @@ app.post("/api/create-checkout-session", upload.array('allegato'), async (req, r
       content: file.buffer
     })) : [];
 
-    // 2. Invia l'email con Resend a nicusorgeorge.lav@gmail.com
-    await resend.emails.send({
-      from: 'NG Web Designer Store <onboarding@resend.dev>', // Modifica con il tuo dominio verificato su Resend se lo possiedi
-      to: 'nicusorgeorge.lav@gmail.com',
-      subject: `🚀 Nuovo Ordine Landing Page da ${nome} ${cognome}`,
-      html: `
-        <h2>Nuovo Progetto Ricevuto!</h2>
-        <p><strong>Nome:</strong> ${nome} ${cognome}</p>
-        <p><strong>Email Cliente:</strong> ${email}</p>
-        <p><strong>Dominio Desiderato:</strong> ${dominio}</p>
-        <p><strong>Tema / Obiettivo:</strong> ${tema}</p>
-        <hr/>
-        <h3>Riepilogo Carrello:</h3>
-        <p>${carrello}</p>
-      `,
-      attachments: attachments
-    });
+    // 2. Invia l'email con Resend (con blocco try/catch isolato per evitare che un failure blocchi Stripe)
+    try {
+      await resend.emails.send({
+        from: 'NG Web Designer Store <onboarding@resend.dev>', // Modifica con il tuo dominio verificato su Resend se lo possiedi
+        to: 'nicusorgeorge.lav@gmail.com',
+        subject: `🚀 Nuovo Ordine Landing Page da ${nome || ''} ${cognome || ''}`,
+        html: `
+          <h2>Nuovo Progetto Ricevuto!</h2>
+          <p><strong>Nome:</strong> ${nome || ''} ${cognome || ''}</p>
+          <p><strong>Email Cliente:</strong> ${email || ''}</p>
+          <p><strong>Dominio Desiderato:</strong> ${dominio || ''}</p>
+          <p><strong>Tema / Obiettivo:</strong> ${tema || ''}</p>
+          <hr/>
+          <h3>Riepilogo Carrello:</h3>
+          <p>${carrello || ''}</p>
+        `,
+        attachments: attachments
+      });
+    } catch (emailErr) {
+      console.error("Attenzione: Errore invio email con Resend:", emailErr);
+      // Continua comunque per consentire il pagamento
+    }
 
     // 3. Costruisce gli elementi per Stripe
     const lineItems = parsedItems.map(item => {
-      const infoProdotto = PREZZI_PACCHETTI[item.id] || { nome: item.nome, prezzoCentesimi: item.prezzo * 100 };
+      const infoProdotto = PREZZI_PACCHETTI[item.id] || { nome: item.nome || 'Progetto Web', prezzoCentesimi: (item.prezzo || 0) * 100 };
       return {
         price_data: {
           currency: 'eur',
@@ -73,24 +75,28 @@ app.post("/api/create-checkout-session", upload.array('allegato'), async (req, r
           },
           unit_amount: infoProdotto.prezzoCentesimi,
         },
-        quantity: item.quantita,
+        quantity: item.quantita || 1,
       };
     });
 
-    // 4. Crea la sessione Stripe Embedded Checkout
+    const domainUrl = process.env.DOMAIN || 'https://ngwebdesigner.com';
+
+    // 4. Crea la sessione Stripe Hosted Checkout (Redirect classico)
     const session = await stripe.checkout.sessions.create({
-      ui_mode: 'form',
       mode: 'payment',
-      customer_email: email, // Precompila l'email su Stripe con quella inserita nel form
+      customer_email: email,
       billing_address_collection: 'auto',
       submit_type: 'auto',
       line_items: lineItems,
-      return_url: `${process.env.DOMAIN || 'https://ngwebdesigner.com'}/conferma.html?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${domainUrl}/conferma.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${domainUrl}/`
     });
 
-    res.json({ client_secret: session.client_secret });
+    // Ritorna l'URL diretto a Stripe al frontend
+    res.json({ url: session.url });
+
   } catch (error) {
-    console.error("Errore nell'invio email o creazione sessione Stripe:", error);
+    console.error("Errore generale backend:", error);
     res.status(500).json({ error: error.message });
   }
 });

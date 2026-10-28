@@ -29,8 +29,8 @@
       rel="stylesheet"
     />
 
-    <!-- Stripe.js SDK (versione Dahlia per embedded form) -->
-    <script src="https://js.stripe.com/dahlia/stripe.js"></script>
+    <!-- Stripe.js SDK Official v3 -->
+    <script src="https://js.stripe.com/v3/"></script>
 
     <!-- Cloudflare Turnstile SDK -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -501,7 +501,7 @@
       </div>
     </div>
 
-    <!-- MODAL RACCOLTA DATI PROGETTO, CHECKBOX, TURNSTILE & STRIPE -->
+    <!-- MODAL RACCOLTA DATI PROGETTO -->
     <div
       id="checkout-modal"
       class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300"
@@ -518,10 +518,10 @@
           &times;
         </button>
 
-        <!-- STEP 1: FORM RACCOLTA DATI PROGETTO -->
+        <!-- FORM RACCOLTA DATI PROGETTO -->
         <div id="step-form-container">
           <div class="mb-6">
-            <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-1">Passaggio 1 di 2</span>
+            <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-1">Dati Progetto</span>
             <h3 class="text-2xl font-extrabold text-white">Dettagli del Progetto</h3>
             <p class="text-slate-400 text-xs mt-1">Inserisci i requisiti per la tua landing page. I dati e gli allegati saranno inviati a <strong class="text-cyan-400">nicusorgeorge.lav@gmail.com</strong>.</p>
           </div>
@@ -580,17 +580,6 @@
               <span>💳</span>
             </button>
           </form>
-        </div>
-
-        <!-- STEP 2: CONTENITORE STRIPE EMBEDDED CHECKOUT -->
-        <div id="step-stripe-container" class="hidden space-y-4">
-          <div class="mb-4">
-            <span class="text-xs font-mono text-emerald-400 uppercase tracking-wider block mb-1">Passaggio 2 di 2 • Verificato & Dati Inviati ✅</span>
-            <h3 class="text-2xl font-extrabold text-white">Cassa Sicura Stripe</h3>
-          </div>
-          <div id="checkout-form">
-            <!-- Il form di pagamento Stripe verrà iniettato qui via SDK -->
-          </div>
         </div>
       </div>
     </div>
@@ -690,10 +679,8 @@
       </div>
     </div>
 
-    <!-- JAVASCRIPT E-COMMERCE & STRIPE SDK INTEGRATION -->
+    <!-- JAVASCRIPT E-COMMERCE & STRIPE HOSTED REDIRECT -->
     <script>
-      const stripe = Stripe('pk_live_51UUoGoE1hhzizsCmXzNtEf4FtIETtxDFer8IBUc2Hg0YCSqjkQtkxT5Wy5QCItV4UANDX0gMyCOwsS0cyPDxTuwI00FcKfxJh1');
-
       const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? 'http://localhost:4242'
         : 'https://ngwebdesigner-backed.onrender.com';
@@ -713,9 +700,6 @@
       const checkoutModal = document.getElementById("checkout-modal");
       const checkoutBox = document.getElementById("checkout-box");
       const closeCheckoutBtn = document.getElementById("close-checkout-btn");
-
-      const stepFormContainer = document.getElementById("step-form-container");
-      const stepStripeContainer = document.getElementById("step-stripe-container");
 
       function aggiungiAlCarrello(id, nome, prezzo) {
         const itemEsistente = cart.find(i => i.id === id);
@@ -790,9 +774,6 @@
 
       function apriFormProgetto() {
         chiudiCarrello();
-        stepFormContainer.classList.remove("hidden");
-        stepStripeContainer.classList.add("hidden");
-
         checkoutModal.classList.remove("pointer-events-none", "opacity-0");
         checkoutModal.classList.add("opacity-100");
         checkoutBox.classList.remove("scale-95", "translate-y-4");
@@ -811,7 +792,7 @@
         }
 
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="animate-pulse">Verifica e invio in corso...</span>';
+        submitBtn.innerHTML = '<span class="animate-pulse">Invio dati e reindirizzamento a Stripe...</span>';
 
         const formData = new FormData(form);
 
@@ -829,56 +810,16 @@
           
           const json = await response.json();
           
-          if (!json.client_secret) {
+          if (!response.ok || !json.url) {
             throw new Error(json.error || "Impossibile inizializzare la sessione di pagamento.");
           }
 
-          stepFormContainer.classList.add("hidden");
-          stepStripeContainer.classList.remove("hidden");
-
-          document.getElementById('checkout-form').innerHTML = `
-            <div class="text-center py-8 text-cyan-400 text-xs font-mono animate-pulse">
-              Caricamento modulo di pagamento sicuro Stripe...
-            </div>
-          `;
-
-          const appearance = {
-            "theme": "stripe",
-            "labels": "auto",
-            "inputs": "spaced",
-            "variables": {
-              "borderRadius": "8px",
-              "colorBackground": "#030712",
-              "colorDanger": "#f43f5e",
-              "colorPrimary": "#06b6d4",
-              "colorSuccess": "#10b981",
-              "colorText": "#f8fafc",
-              "fontFamily": "Plus Jakarta Sans, sans-serif",
-              "fontSizeBase": "14px",
-              "spacingUnit": "4px"
-            }
-          };
-
-          const checkout = stripe.initCheckoutFormSdk({ clientSecret: json.client_secret, appearance });
-          const stripeForm = checkout.createForm({ layout: 'expanded' });
-          
-          document.getElementById('checkout-form').innerHTML = ""; 
-          stripeForm.mount('#checkout-form');
-
-          const loadActionsResult = await checkout.loadActions();
-          if (loadActionsResult.type === 'success') {
-            stripeForm.on('confirm', async (e) => {
-              try {
-                await loadActionsResult.actions.confirm({ formConfirmEvent: e });
-              } catch (error) {
-                console.error('Errore di conferma pagamento:', error);
-              }
-            });
-          }
+          // REINDIRIZZAMENTO DIRETTO A STRIPE CHECKOUT
+          window.location.href = json.url;
 
         } catch (err) {
-          console.error(err);
-          alert(err.message || "Si è verificato un errore. Riprova.");
+          console.error("Errore durante il checkout:", err);
+          alert(err.message || "Si è verificato un errore durante l'avvio del pagamento.");
           submitBtn.disabled = false;
           submitBtn.innerHTML = '<span>Conferma Dati e Procedi al Pagamento</span><span>💳</span>';
         }
@@ -905,7 +846,7 @@
         }, 2500);
       }
 
-      // GESTIONE POPUP PROMO
+      // GESTIONE POPUP PROMO & EVENTI DOM
       document.addEventListener("DOMContentLoaded", () => {
         aggiornaInterfacciaCarrello();
 
