@@ -23,11 +23,11 @@ const PREZZI_PACCHETTI = {
   'LP-LARGE': { nome: 'Landing Page - Large', prezzoCentesimi: 60000 }
 };
 
-// Endpoint unificato: riceve i dati del form + file, invia l'email con Resend e crea la sessione Stripe
+// Endpoint unificato
 app.post("/api/create-checkout-session", upload.array('allegato'), async (req, res) => {
   try {
     const { nome, cognome, email, dominio, tema, carrello, items } = req.body;
-    const files = req.files; // File allegati caricati dall'utente
+    const files = req.files;
 
     if (!items) {
       return res.status(400).json({ error: "Il carrello è vuoto" });
@@ -35,14 +35,13 @@ app.post("/api/create-checkout-session", upload.array('allegato'), async (req, r
 
     const parsedItems = typeof items === 'string' ? JSON.parse(items) : items;
 
-    // 1. Prepara gli allegati per Resend (se presenti)
-    const attachments = files && files.length > 0 ? files.map(file => ({
-      filename: file.originalname,
-      content: file.buffer
-    })) : [];
-
-    // 2. Invia l'email con Resend (con blocco try/catch isolato)
+    // 1. Invio email con Resend
     try {
+      const attachments = files && files.length > 0 ? files.map(file => ({
+        filename: file.originalname,
+        content: file.buffer
+      })) : [];
+
       await resend.emails.send({
         from: 'NG Web Designer Store <onboarding@resend.dev>',
         to: 'nicusorgeorge.lav@gmail.com',
@@ -63,9 +62,12 @@ app.post("/api/create-checkout-session", upload.array('allegato'), async (req, r
       console.error("Attenzione: Errore invio email con Resend:", emailErr);
     }
 
-    // 3. Costruisce gli elementi per Stripe
+    // 2. Costruzione carrello Stripe
     const lineItems = parsedItems.map(item => {
-      const infoProdotto = PREZZI_PACCHETTI[item.id] || { nome: item.nome || 'Progetto Web', prezzoCentesimi: (item.prezzo || 0) * 100 };
+      const infoProdotto = PREZZI_PACCHETTI[item.id] || { 
+        nome: item.nome || 'Progetto Web', 
+        prezzoCentesimi: (item.prezzo || 0) * 100 
+      };
       return {
         price_data: {
           currency: 'eur',
@@ -78,29 +80,28 @@ app.post("/api/create-checkout-session", upload.array('allegato'), async (req, r
       };
     });
 
-    // Pulisce il dominio rimuovendo spazi o slash finali per evitare l'errore 'url_invalid'
-    let domainUrl = (process.env.DOMAIN || 'https://ngwebdesigner.com').trim();
-    if (!domainUrl.startsWith('http://') && !domainUrl.startsWith('https://')) {
-      domainUrl = `https://${domainUrl}`;
-    }
-    domainUrl = domainUrl.replace(/\/+$/, '');
-
-    // 4. Crea la sessione Stripe Hosted Checkout
-    const session = await stripe.checkout.sessions.create({
+    // 3. Configurazione Sessione Stripe Checkout (URL FISSI E SICURI)
+    const sessionConfig = {
       mode: 'payment',
-      customer_email: email,
       billing_address_collection: 'auto',
       submit_type: 'auto',
       line_items: lineItems,
-      success_url: `${domainUrl}/conferma.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${domainUrl}/`
-    });
+      success_url: 'https://ngwebdesigner.com/conferma.html?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'https://ngwebdesigner.com/landing-page.html',
+    };
 
-    // Ritorna l'URL diretto a Stripe al frontend
+    // Aggiunge l'email solo se valida
+    if (email && email.trim() !== '' && email.includes('@')) {
+      sessionConfig.customer_email = email.trim();
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionConfig);
+
+    // Ritorna l'URL al frontend
     res.json({ url: session.url });
 
   } catch (error) {
-    console.error("Errore generale backend:", error);
+    console.error("Errore generale backend Stripe:", error);
     res.status(500).json({ error: error.message });
   }
 });
