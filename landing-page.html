@@ -32,6 +32,9 @@
     <!-- Stripe.js SDK (versione Dahlia per embedded form) -->
     <script src="https://js.stripe.com/dahlia/stripe.js"></script>
 
+    <!-- Cloudflare Turnstile SDK -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
     <style>
       body {
         font-family: "Plus Jakarta Sans", sans-serif;
@@ -85,6 +88,33 @@
         <div
           class="absolute top-0 left-1/2 -translate-x-1/2 w-[280px] sm:w-[500px] md:w-[600px] h-[300px] bg-gradient-to-tr from-indigo-600/20 to-cyan-400/20 blur-[100px] rounded-full animate-pulse-slow"
         ></div>
+      </div>
+
+      <!-- PROMO LANCIO 2026! -->
+      <div
+        class="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white py-2.5 px-4 text-center relative overflow-hidden shadow-md"
+      >
+        <div
+          class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-medium"
+        >
+          <span
+            class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse"
+          >
+            Promo Lancio (Solo per 5 attività)
+          </span>
+          <span>
+            🤝 <strong>Porta 3 amici</strong> per loro
+            <strong>-20% su sito web</strong> per te
+            <strong>1 Anno di Assistenza GRATIS!</strong>
+          </span>
+          <button
+            type="button"
+            id="open-promo-modal"
+            class="underline font-bold hover:text-slate-200 transition-colors ml-1 cursor-pointer"
+          >
+            Leggi il Regolamento &rarr;
+          </button>
+        </div>
       </div>
 
       <!-- HEADER & NAVBAR FISSA -->
@@ -350,11 +380,66 @@
         </div>
       </main>
 
-      <!-- FOOTER -->
+      <!-- FOOTER CON SOCIAL ICONS -->
       <footer
         class="border-t border-slate-900 bg-slate-950/80 text-center py-6 text-xs text-slate-500 font-mono relative z-10 w-full"
       >
         <div class="max-w-7xl mx-auto px-4 flex flex-col items-center space-y-4">
+          <div class="flex items-center space-x-6">
+            <a
+              href="https://github.com/ngwebdesigner"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-500 hover:text-cyan-400 transition-colors"
+              aria-label="GitHub"
+            >
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://tiktok.com/@ngwebdesigner"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-500 hover:text-cyan-300 transition-colors"
+              aria-label="TikTok"
+            >
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.13z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://instagram.com/nicuale99"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-500 hover:text-pink-400 transition-colors"
+              aria-label="Instagram"
+            >
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                />
+              </svg>
+            </a>
+            <!-- Facebook -->
+            <a
+              href="https://www.facebook.com/share/1Da1RDuprr/?mibextid=wwXlfr"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-500 hover:text-blue-600 transition-colors"
+              aria-label="Facebook"
+            >
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                />
+              </svg>
+            </a>
+          </div>
           <p>© 2026 NG Web Designer • Nicusor George Alexandru</p>
         </div>
       </footer>
@@ -405,18 +490,18 @@
             <button
               id="checkout-btn"
               type="button"
-              onclick="apriCheckout()"
+              onclick="apriFormProgetto()"
               class="w-full py-3.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/30 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span>Procedi al Pagamento</span>
-              <span>💳</span>
+              <span>Procedi con i Dati del Progetto</span>
+              <span>📋</span>
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- MODAL CHECKOUT CON EMBEDDED FORM DI STRIPE -->
+    <!-- MODAL RACCOLTA DATI PROGETTO, CHECKBOX, TURNSTILE & STRIPE -->
     <div
       id="checkout-modal"
       class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300"
@@ -433,14 +518,162 @@
           &times;
         </button>
 
-        <div class="mb-6">
-          <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-1">Cassa Sicura Stripe</span>
-          <h3 class="text-2xl font-extrabold text-white">Completa il Pagamento</h3>
+        <!-- STEP 1: FORM RACCOLTA DATI PROGETTO -->
+        <div id="step-form-container">
+          <div class="mb-6">
+            <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-1">Passaggio 1 di 2</span>
+            <h3 class="text-2xl font-extrabold text-white">Dettagli del Progetto</h3>
+            <p class="text-slate-400 text-xs mt-1">Inserisci i requisiti per la tua landing page. I dati e gli allegati saranno inviati a <strong class="text-cyan-400">nicusorgeorge.lav@gmail.com</strong>.</p>
+          </div>
+
+          <form id="project-details-form" onsubmit="inviaDatiAlBackend(event)" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-mono text-slate-300 mb-1">Nome *</label>
+                <input type="text" name="nome" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500" placeholder="Il tuo nome">
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-slate-300 mb-1">Cognome *</label>
+                <input type="text" name="cognome" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500" placeholder="Il tuo cognome">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-slate-300 mb-1">Email *</label>
+              <input type="email" name="email" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500" placeholder="tua@email.com">
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-slate-300 mb-1">Dominio desiderato *</label>
+              <input type="text" name="dominio" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500" placeholder="es. tuonome.it">
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-slate-300 mb-1">Tema pagina / Obiettivo *</label>
+              <textarea name="tema" rows="3" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500" placeholder="Descrivi brevemente l'attività o il tema della pagina..."></textarea>
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-slate-300 mb-1">Allegati foto/video (Opzionale)</label>
+              <input type="file" name="allegato" multiple class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-cyan-500/10 file:text-cyan-400 hover:file:bg-cyan-500/20 cursor-pointer">
+            </div>
+
+            <!-- CLOUDFLARE TURNSTILE WIDGET ANTIBOT -->
+            <div class="py-2">
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAAFZx6oW-o2Q4sTPo" data-theme="dark"></div>
+            </div>
+
+            <!-- CHECKBOX TERMINI E CONDIZIONI -->
+            <div class="flex items-start gap-3 pt-1">
+              <input type="checkbox" id="termini" name="termini" required class="mt-1 w-4 h-4 rounded border-slate-800 bg-slate-950 text-cyan-500 focus:ring-cyan-500 cursor-pointer">
+              <label for="termini" class="text-xs text-slate-400 select-none">
+                Accetto i <a href="termini.html" target="_blank" class="text-cyan-400 underline hover:text-cyan-300">Termini e Condizioni</a> e l'informativa sulla privacy per il trattamento dei dati. *
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              id="submit-form-btn"
+              class="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/30 cursor-pointer flex items-center justify-center gap-2 mt-4"
+            >
+              <span>Conferma Dati e Procedi al Pagamento</span>
+              <span>💳</span>
+            </button>
+          </form>
         </div>
 
-        <!-- CONTENITORE DOVE STRIPE RENDERIZZA IL MODULO INTEGRATO -->
-        <div id="checkout-form" class="space-y-4">
-          <!-- Il form di pagamento Stripe verrà iniettato qui via SDK -->
+        <!-- STEP 2: CONTENITORE STRIPE EMBEDDED CHECKOUT -->
+        <div id="step-stripe-container" class="hidden space-y-4">
+          <div class="mb-4">
+            <span class="text-xs font-mono text-emerald-400 uppercase tracking-wider block mb-1">Passaggio 2 di 2 • Verificato & Dati Inviati ✅</span>
+            <h3 class="text-2xl font-extrabold text-white">Cassa Sicura Stripe</h3>
+          </div>
+          <div id="checkout-form">
+            <!-- Il form di pagamento Stripe verrà iniettato qui via SDK -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POP-UP REGOLAMENTO PROMO -->
+    <div
+      id="promo-modal"
+      class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300 ease-out"
+    >
+      <div
+        id="promo-modal-box"
+        class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 sm:p-8 text-slate-100 shadow-2xl relative transform scale-95 translate-y-4 opacity-0 transition-all duration-300 ease-out"
+      >
+        <button
+          id="close-promo-modal"
+          type="button"
+          class="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl font-bold p-2 transition-colors cursor-pointer"
+        >
+          &times;
+        </button>
+
+        <div class="flex items-center gap-2 mb-5">
+          <span
+            class="bg-red-500/10 text-red-500 font-mono text-xs font-bold px-3 py-1 rounded-full border border-red-500/20 uppercase tracking-wider"
+          >
+            Regolamento Promo
+          </span>
+          <h3 class="text-xl font-extrabold text-white">Porta 3 Amici</h3>
+        </div>
+
+        <div
+          class="text-sm text-slate-200 space-y-4 leading-relaxed border-t border-slate-800 pt-4"
+        >
+          <p>
+            <strong class="text-white font-semibold"
+              >1. Vantaggio per Te:</strong
+            >
+            Presenta 3 attività o professionisti che acquistano un nuovo sito
+            web con NG Web Designer e otterrai
+            <span class="text-red-400 font-bold"
+              >12 mesi di assistenza e manutenzione GRATUITI</span
+            >
+            per il tuo sito.
+          </p>
+          <p>
+            <strong class="text-white font-semibold"
+              >2. Vantaggio per i tuoi Amici:</strong
+            >
+            Ciascuna delle 3 persone da te presentate riceverà uno
+            <span class="text-red-400 font-bold">sconto immediato del 20%</span>
+            sul totale del loro nuovo sito web!
+          </p>
+          <p>
+            <strong class="text-white font-semibold"
+              >3. Come riscattarlo:</strong
+            >
+            Al momento del primo contatto, l'amico dovrà semplicemente
+            comunicare il tuo nome o il nome della tua attività per attivare
+            subito lo sconto del 20%.
+          </p>
+          <p>
+            <strong class="text-white font-semibold">4. Validità:</strong>
+            Promozione a posti limitati, valida esclusivamente per i primi 5
+            clienti che completano le 3 presentazioni.
+          </p>
+          <p>
+            <strong class="text-white font-semibold"
+              >5. Cosa include l'assistenza:</strong
+            >
+            Gestione e rinnovo dominio/hosting, monitoraggio di sicurezza,
+            backup periodici e piccole modifiche a testi/immagini per un anno
+            intero.
+          </p>
+        </div>
+
+        <div class="mt-8 pt-4 border-t border-slate-800 flex justify-end">
+          <button
+            id="close-promo-modal-btn"
+            type="button"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold text-sm px-6 py-3 rounded-xl transition-all hover:shadow-lg hover:shadow-red-600/30 cursor-pointer"
+          >
+            Ho Capito
+          </button>
         </div>
       </div>
     </div>
@@ -459,18 +692,14 @@
 
     <!-- JAVASCRIPT E-COMMERCE & STRIPE SDK INTEGRATION -->
     <script>
-      // CHIAVE PUBBLICA STRIPE INSERITA
       const stripe = Stripe('pk_live_51UUoGoE1hhzizsCmXzNtEf4FtIETtxDFer8IBUc2Hg0YCSqjkQtkxT5Wy5QCItV4UANDX0gMyCOwsS0cyPDxTuwI00FcKfxJh1');
 
-      // Indirizzo del tuo server backend (in locale usa http://localhost:4242, in produzione inserisci l'URL di Render/Vercel)
       const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? 'http://localhost:4242'
         : 'https://ngwebdesigner-backed.onrender.com';
 
-      // STATO DEL CARRELLO
       let cart = [];
 
-      // ELEMENTI DOM
       const cartBtn = document.getElementById("cart-btn");
       const cartBadge = document.getElementById("cart-badge");
       const cartDrawer = document.getElementById("cart-drawer");
@@ -485,7 +714,9 @@
       const checkoutBox = document.getElementById("checkout-box");
       const closeCheckoutBtn = document.getElementById("close-checkout-btn");
 
-      // AGGIUNGI AL CARRELLO
+      const stepFormContainer = document.getElementById("step-form-container");
+      const stepStripeContainer = document.getElementById("step-stripe-container");
+
       function aggiungiAlCarrello(id, nome, prezzo) {
         const itemEsistente = cart.find(i => i.id === id);
         if (itemEsistente) {
@@ -498,7 +729,6 @@
         apriCarrello();
       }
 
-      // RIMUOVI O MODIFICA QUANTITÀ
       function cambiaQuantita(id, variazione) {
         const index = cart.findIndex(i => i.id === id);
         if (index !== -1) {
@@ -510,7 +740,6 @@
         aggiornaInterfacciaCarrello();
       }
 
-      // AGGIORNA INTERFACCIA CARRELLO & BADGE
       function aggiornaInterfacciaCarrello() {
         const totaleQuantita = cart.reduce((sum, item) => sum + item.quantita, 0);
         const totalePrezzo = cart.reduce((sum, item) => sum + (item.prezzo * item.quantita), 0);
@@ -544,7 +773,6 @@
         }
       }
 
-      // APRI E CHIUDI CARRELLO DRAWER
       function apriCarrello() {
         cartDrawer.classList.remove("pointer-events-none", "opacity-0");
         cartDrawer.classList.add("opacity-100");
@@ -560,21 +788,60 @@
         }, 300);
       }
 
-      // APRI E INIZIALIZZA STRIPE EMBEDDED CHECKOUT
-      async function apriCheckout() {
+      function apriFormProgetto() {
         chiudiCarrello();
+        stepFormContainer.classList.remove("hidden");
+        stepStripeContainer.classList.add("hidden");
+
         checkoutModal.classList.remove("pointer-events-none", "opacity-0");
         checkoutModal.classList.add("opacity-100");
         checkoutBox.classList.remove("scale-95", "translate-y-4");
         checkoutBox.classList.add("scale-100", "translate-y-0");
+      }
 
-        document.getElementById('checkout-form').innerHTML = `
-          <div class="text-center py-8 text-cyan-400 text-xs font-mono animate-pulse">
-            Caricamento del modulo di pagamento sicuro...
-          </div>
-        `;
+      async function inviaDatiAlBackend(event) {
+        event.preventDefault();
+        const form = event.target;
+        const submitBtn = document.getElementById("submit-form-btn");
+
+        const turnstileResponse = form.querySelector('[name="cf-turnstile-response"]');
+        if (turnstileResponse && !turnstileResponse.value) {
+          alert("Per favore, completa la verifica antibot Cloudflare prima di procedere.");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="animate-pulse">Verifica e invio in corso...</span>';
+
+        const formData = new FormData(form);
+
+        const riepilogoCarrello = cart.map(i => `${i.quantita}x ${i.nome} (€${i.prezzo} cad.)`).join(', ');
+        const totaleCarrello = cart.reduce((sum, item) => sum + (item.prezzo * item.quantita), 0);
+        formData.append('carrello', riepilogoCarrello);
+        formData.append('totale_eur', `€${totaleCarrello}`);
+        formData.append('items', JSON.stringify(cart));
 
         try {
+          const response = await fetch(`${BACKEND_URL}/api/create-checkout-session`, {
+            method: 'POST',
+            body: formData
+          });
+          
+          const json = await response.json();
+          
+          if (!json.client_secret) {
+            throw new Error(json.error || "Impossibile inizializzare la sessione di pagamento.");
+          }
+
+          stepFormContainer.classList.add("hidden");
+          stepStripeContainer.classList.remove("hidden");
+
+          document.getElementById('checkout-form').innerHTML = `
+            <div class="text-center py-8 text-cyan-400 text-xs font-mono animate-pulse">
+              Caricamento modulo di pagamento sicuro Stripe...
+            </div>
+          `;
+
           const appearance = {
             "theme": "stripe",
             "labels": "auto",
@@ -592,41 +859,28 @@
             }
           };
 
-          const response = await fetch(`${BACKEND_URL}/api/create-checkout-session`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items: cart })
-          });
-          
-          const json = await response.json();
-          
-          if (!json.client_secret) {
-            throw new Error(json.error || "Impossibile inizializzare la sessione di pagamento.");
-          }
-
           const checkout = stripe.initCheckoutFormSdk({ clientSecret: json.client_secret, appearance });
-          const form = checkout.createForm({ layout: 'expanded' });
+          const stripeForm = checkout.createForm({ layout: 'expanded' });
           
           document.getElementById('checkout-form').innerHTML = ""; 
-          form.mount('#checkout-form');
+          stripeForm.mount('#checkout-form');
 
           const loadActionsResult = await checkout.loadActions();
           if (loadActionsResult.type === 'success') {
-            form.on('confirm', async (event) => {
+            stripeForm.on('confirm', async (e) => {
               try {
-                await loadActionsResult.actions.confirm({ formConfirmEvent: event });
+                await loadActionsResult.actions.confirm({ formConfirmEvent: e });
               } catch (error) {
                 console.error('Errore di conferma pagamento:', error);
               }
             });
           }
+
         } catch (err) {
           console.error(err);
-          document.getElementById('checkout-form').innerHTML = `
-            <div class="text-center py-6 text-rose-400 text-xs font-mono">
-              ${err.message || "Errore di connessione al server di pagamento."}
-            </div>
-          `;
+          alert(err.message || "Si è verificato un errore. Riprova.");
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Conferma Dati e Procedi al Pagamento</span><span>💳</span>';
         }
       }
 
@@ -640,7 +894,6 @@
         }, 300);
       }
 
-      // TOAST NOTIFICATION
       function mostraToast(messaggio) {
         const toast = document.getElementById("toast");
         document.getElementById("toast-message").textContent = messaggio;
@@ -652,7 +905,7 @@
         }, 2500);
       }
 
-      // EVENT LISTENERS
+      // GESTIONE POPUP PROMO
       document.addEventListener("DOMContentLoaded", () => {
         aggiornaInterfacciaCarrello();
 
@@ -660,6 +913,44 @@
         if (closeCartBtn) closeCartBtn.addEventListener("click", chiudiCarrello);
         if (cartBackdrop) cartBackdrop.addEventListener("click", chiudiCarrello);
         if (closeCheckoutBtn) closeCheckoutBtn.addEventListener("click", chiudiCheckout);
+
+        const promoModal = document.getElementById("promo-modal");
+        const promoModalBox = document.getElementById("promo-modal-box");
+        const openPromoBtn = document.getElementById("open-promo-modal");
+        const closePromoBtn = document.getElementById("close-promo-modal");
+        const closePromoBtn2 = document.getElementById("close-promo-modal-btn");
+
+        const openPromoModal = () => {
+          promoModal.classList.remove("pointer-events-none", "opacity-0");
+          promoModal.classList.add("opacity-100");
+          promoModalBox.classList.remove("scale-95", "translate-y-4", "opacity-0");
+          promoModalBox.classList.add("scale-100", "translate-y-0", "opacity-100");
+        };
+
+        const closePromoModal = () => {
+          promoModalBox.classList.remove("scale-100", "translate-y-0", "opacity-100");
+          promoModalBox.classList.add("scale-95", "translate-y-4", "opacity-0");
+          promoModal.classList.remove("opacity-100");
+          promoModal.classList.add("opacity-0");
+          setTimeout(() => {
+            promoModal.classList.add("pointer-events-none");
+          }, 300);
+        };
+
+        if (openPromoBtn && promoModal) {
+          openPromoBtn.addEventListener("click", openPromoModal);
+          [closePromoBtn, closePromoBtn2].forEach((btn) => {
+            if (btn) btn.addEventListener("click", closePromoModal);
+          });
+          promoModal.addEventListener("click", (e) => {
+            if (e.target === promoModal) closePromoModal();
+          });
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && !promoModal.classList.contains("pointer-events-none")) {
+              closePromoModal();
+            }
+          });
+        }
       });
     </script>
   </body>

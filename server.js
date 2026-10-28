@@ -2,36 +2,68 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { Stripe } = require("stripe");
+const { Resend } = require("resend");
+const multer = require("multer");
 
-// Inizializza Stripe con la tua chiave segreta salvata nelle variabili d'ambiente
+// Configurazione Multer per gestire i file in memoria
+const upload = multer();
+
+// Inizializza Stripe e Resend con le chiavi salvate nelle variabili d'ambiente
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2026-03-25.dahlia',
 });
 
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 const app = express();
 
-// Permette le richieste CORS e la lettura di JSON
 app.use(cors());
 app.use(express.json());
 
-// Mappa dei prezzi dei pacchetti in Euro (centesimi) o ID dei prodotti Stripe
 const PREZZI_PACCHETTI = {
   'LP-SMALL': { nome: 'Landing Page - Small', prezzoCentesimi: 35000 },
   'LP-MEDIUM': { nome: 'Landing Page - Medium', prezzoCentesimi: 45000 },
   'LP-LARGE': { nome: 'Landing Page - Large', prezzoCentesimi: 60000 }
 };
 
-// Endpoint per la creazione della sessione di checkout di Stripe
-app.post("/api/create-checkout-session", async (req, res) => {
+// Endpoint unificato: riceve i dati del form + file, invia l'email con Resend e crea la sessione Stripe
+app.post("/api/create-checkout-session", upload.array('allegato'), async (req, res) => {
   try {
-    const { items } = req.body;
+    const { nome, cognome, email, dominio, tema, carrello, items } = req.body;
+    const files = req.files; // File allegati caricati dall'utente
 
-    if (!items || items.length === 0) {
+    if (!items) {
       return res.status(400).json({ error: "Il carrello è vuoto" });
     }
 
-    // Costruiamo gli elementi per il checkout di Stripe
-    const lineItems = items.map(item => {
+    const parsedItems = JSON.parse(items);
+
+    // 1. Prepara gli allegati per Resend (se presenti)
+    const attachments = files && files.length > 0 ? files.map(file => ({
+      filename: file.originalname,
+      content: file.buffer
+    })) : [];
+
+    // 2. Invia l'email con Resend a nicusorgeorge.lav@gmail.com
+    await resend.emails.send({
+      from: 'NG Web Designer Store <onboarding@resend.dev>', // Modifica con il tuo dominio verificato su Resend se lo possiedi
+      to: 'nicusorgeorge.lav@gmail.com',
+      subject: `🚀 Nuovo Ordine Landing Page da ${nome} ${cognome}`,
+      html: `
+        <h2>Nuovo Progetto Ricevuto!</h2>
+        <p><strong>Nome:</strong> ${nome} ${cognome}</p>
+        <p><strong>Email Cliente:</strong> ${email}</p>
+        <p><strong>Dominio Desiderato:</strong> ${dominio}</p>
+        <p><strong>Tema / Obiettivo:</strong> ${tema}</p>
+        <hr/>
+        <h3>Riepilogo Carrello:</h3>
+        <p>${carrello}</p>
+      `,
+      attachments: attachments
+    });
+
+    // 3. Costruisce gli elementi per Stripe
+    const lineItems = parsedItems.map(item => {
       const infoProdotto = PREZZI_PACCHETTI[item.id] || { nome: item.nome, prezzoCentesimi: item.prezzo * 100 };
       return {
         price_data: {
@@ -45,19 +77,20 @@ app.post("/api/create-checkout-session", async (req, res) => {
       };
     });
 
-    // Parametri configurati per Stripe Embedded Checkout
+    // 4. Crea la sessione Stripe Embedded Checkout
     const session = await stripe.checkout.sessions.create({
       ui_mode: 'form',
       mode: 'payment',
+      customer_email: email, // Precompila l'email su Stripe con quella inserita nel form
       billing_address_collection: 'auto',
       submit_type: 'auto',
       line_items: lineItems,
-      return_url: `${process.env.DOMAIN || 'https://ngwebdesigner.github.io'}/conferma.html?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${process.env.DOMAIN || 'https://ngwebdesigner.com'}/conferma.html?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     res.json({ client_secret: session.client_secret });
   } catch (error) {
-    console.error("Errore nella creazione della sessione Stripe:", error);
+    console.error("Errore nell'invio email o creazione sessione Stripe:", error);
     res.status(500).json({ error: error.message });
   }
 });
