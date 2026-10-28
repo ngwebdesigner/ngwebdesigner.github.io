@@ -41,10 +41,10 @@ app.post("/api/create-checkout-session", upload.array('allegato'), async (req, r
       content: file.buffer
     })) : [];
 
-    // 2. Invia l'email con Resend (con blocco try/catch isolato per evitare che un failure blocchi Stripe)
+    // 2. Invia l'email con Resend (con blocco try/catch isolato)
     try {
       await resend.emails.send({
-        from: 'NG Web Designer Store <onboarding@resend.dev>', // Modifica con il tuo dominio verificato su Resend se lo possiedi
+        from: 'NG Web Designer Store <onboarding@resend.dev>',
         to: 'nicusorgeorge.lav@gmail.com',
         subject: `🚀 Nuovo Ordine Landing Page da ${nome || ''} ${cognome || ''}`,
         html: `
@@ -61,7 +61,6 @@ app.post("/api/create-checkout-session", upload.array('allegato'), async (req, r
       });
     } catch (emailErr) {
       console.error("Attenzione: Errore invio email con Resend:", emailErr);
-      // Continua comunque per consentire il pagamento
     }
 
     // 3. Costruisce gli elementi per Stripe
@@ -79,9 +78,14 @@ app.post("/api/create-checkout-session", upload.array('allegato'), async (req, r
       };
     });
 
-    const domainUrl = process.env.DOMAIN || 'https://ngwebdesigner.com';
+    // Pulisce il dominio rimuovendo spazi o slash finali per evitare l'errore 'url_invalid'
+    let domainUrl = (process.env.DOMAIN || 'https://ngwebdesigner.com').trim();
+    if (!domainUrl.startsWith('http://') && !domainUrl.startsWith('https://')) {
+      domainUrl = `https://${domainUrl}`;
+    }
+    domainUrl = domainUrl.replace(/\/+$/, '');
 
-    // 4. Crea la sessione Stripe Hosted Checkout (Redirect classico)
+    // 4. Crea la sessione Stripe Hosted Checkout
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       customer_email: email,
