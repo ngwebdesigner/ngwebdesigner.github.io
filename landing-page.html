@@ -123,7 +123,7 @@
       >
         <div class="max-w-6xl mx-auto flex justify-between items-center">
           <!-- BRAND / LOGO JPG -->
-          <a href="index.html" class="flex items-center gap-3 group">
+          <a href="/" class="flex items-center gap-3 group">
             <div
               class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 via-cyan-500 to-emerald-400 p-0.5 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300 overflow-hidden shrink-0"
             >
@@ -159,16 +159,17 @@
               >
             </button>
 
+            <!-- URL PULITI SENZA .HTML NEI LINK -->
             <select
               id="page-selector"
               onchange="location = this.value"
               class="bg-slate-900/90 text-slate-200 font-mono text-xs px-3 sm:px-4 py-2.5 rounded-xl border border-indigo-500/40 hover:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all duration-300 cursor-pointer shadow-inner"
             >
-              <option value="index.html">Homepage</option>
-              <option value="chi-sono.html">Chi Sono</option>
-              <option value="preventivo.html">Richiesta Sito Web</option>
-              <option value="landing-page.html" selected>Store Landing Page</option>
-              <option value="testimonianze.html">Testimonianze</option>
+              <option value="/">Homepage</option>
+              <option value="/chi-sono">Chi Sono</option>
+              <option value="/preventivo">Richiesta Sito Web</option>
+              <option value="/landing-page" selected>Store Landing Page</option>
+              <option value="/testimonianze">Testimonianze</option>
             </select>
           </div>
         </div>
@@ -523,7 +524,7 @@
           <div class="mb-6">
             <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider block mb-1">Dati Progetto</span>
             <h3 class="text-2xl font-extrabold text-white">Dettagli del Progetto</h3>
-            <p class="text-slate-400 text-xs mt-1">Inserisci i requisiti per la tua landing page. I dati e gli allegati saranno inviati a <strong class="text-cyan-400">nicusorgeorge.lav@gmail.com</strong>.</p>
+            <p class="text-slate-400 text-xs mt-1">Inserisci i requisiti per la tua landing page. I dati e gli allegati saranno inviati a <strong class="text-cyan-400">nicusorgeorge.lav@gmail.com</strong> dopo il pagamento.</p>
           </div>
 
           <form id="project-details-form" onsubmit="inviaDatiAlBackend(event)" class="space-y-4">
@@ -563,11 +564,11 @@
               <div class="cf-turnstile" data-sitekey="0x4AAAAAAFZx6oW-o2Q4sTPo" data-theme="dark"></div>
             </div>
 
-            <!-- CHECKBOX TERMINI E CONDIZIONI -->
+            <!-- CHECKBOX TERMINI E CONDIZIONI CON LINK PULITO -->
             <div class="flex items-start gap-3 pt-1">
               <input type="checkbox" id="termini" name="termini" required class="mt-1 w-4 h-4 rounded border-slate-800 bg-slate-950 text-cyan-500 focus:ring-cyan-500 cursor-pointer">
               <label for="termini" class="text-xs text-slate-400 select-none">
-                Accetto i <a href="termini.html" target="_blank" class="text-cyan-400 underline hover:text-cyan-300">Termini e Condizioni</a> e l'informativa sulla privacy per il trattamento dei dati. *
+                Accetto i <a href="/termini" target="_blank" class="text-cyan-400 underline hover:text-cyan-300">Termini e Condizioni</a> e l'informativa sulla privacy per il trattamento dei dati. *
               </label>
             </div>
 

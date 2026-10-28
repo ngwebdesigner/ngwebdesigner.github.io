@@ -19,7 +19,7 @@ const PREZZI_PACCHETTI = {
   'LP-LARGE': { nome: 'Landing Page - Large', prezzoCentesimi: 60000 }
 };
 
-// 1. ENDPOINT CHECKOUT: Crea solo la sessione Stripe (senza inviare l'email)
+// 1. ENDPOINT CHECKOUT: Salva i dati nei metadata di Stripe e crea la sessione di cassa
 app.post("/api/create-checkout-session", express.json(), upload.array('allegato'), async (req, res) => {
   try {
     const { nome, cognome, email, dominio, tema, carrello, items } = req.body;
@@ -47,14 +47,14 @@ app.post("/api/create-checkout-session", express.json(), upload.array('allegato'
       };
     });
 
+    // Configurazione URL puliti (senza .html)
     const sessionConfig = {
       mode: 'payment',
       billing_address_collection: 'auto',
       submit_type: 'auto',
       line_items: lineItems,
-      success_url: 'https://ngwebdesigner.com/conferma.html?session_id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'https://ngwebdesigner.com/landing-page.html',
-      // Salviamo i dati nei metadata di Stripe per recuperarli dopo il pagamento
+      success_url: 'https://ngwebdesigner.com/conferma?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'https://ngwebdesigner.com/landing-page',
       metadata: {
         cliente_nome: `${nome || ''} ${cognome || ''}`.trim(),
         cliente_email: email || '',
@@ -77,26 +77,23 @@ app.post("/api/create-checkout-session", express.json(), upload.array('allegato'
   }
 });
 
-// 2. ENDPOINT WEBHOOK: Riceve la conferma da Stripe a pagamento COMPLETATO
+// 2. ENDPOINT WEBHOOK: Invia l'email con Resend SOLO quando il pagamento è stato confermato
 app.post("/api/webhook", express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
 
   try {
-    // Verifica che la chiamata arrivi davvero da Stripe usando la chiave segreta Webhook
     event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     console.error(`Errore firma Webhook: ${err.message}`);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // Se il pagamento è andato a buon fine
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
     const meta = session.metadata || {};
 
     try {
-      // Invia l'email con Resend SOLO ORA
       await resend.emails.send({
         from: 'NG Web Designer Store <onboarding@resend.dev>',
         to: 'nicusorgeorge.lav@gmail.com',
