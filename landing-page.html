@@ -441,7 +441,17 @@
               </svg>
             </a>
           </div>
-          <p>© 2026 NG Web Designer • Nicusor George Alexandru</p>
+          <!-- COPYRIGHT CON LINK AI TERMINI E CONDIZIONI INCLUSO -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs">
+            <p>&copy; <span id="year"></span> NG Web Designer • Nicusor George Alexandru</p>
+            <span class="hidden sm:inline text-slate-700">•</span>
+            <a
+              href="terminiecondizioni.html"
+              class="text-cyan-400 hover:underline transition-colors font-semibold"
+            >
+              Termini e Condizioni
+            </a>
+          </div>
         </div>
       </footer>
     </div>
@@ -568,7 +578,7 @@
             <div class="flex items-start gap-3 pt-1">
               <input type="checkbox" id="termini" name="termini" required class="mt-1 w-4 h-4 rounded border-slate-800 bg-slate-950 text-cyan-500 focus:ring-cyan-500 cursor-pointer">
               <label for="termini" class="text-xs text-slate-400 select-none">
-                Accetto i <a href="/termini" target="_blank" class="text-cyan-400 underline hover:text-cyan-300">Termini e Condizioni</a> e l'informativa sulla privacy per il trattamento dei dati. *
+                Accetto i <a href="/terminiecondizioni" target="_blank" class="text-cyan-400 underline hover:text-cyan-300">Termini e Condizioni</a> e l'informativa sulla privacy per il trattamento dei dati. *
               </label>
             </div>
 
